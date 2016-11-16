@@ -1,0 +1,126 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+__author__ = "qinguoan@nosa.me"
+
+import sys
+import random
+from loki.zookeeper import zk, NODE
+
+"""
+inital default zookeeper path and values of loki.
+"""
+
+
+def init_path():
+    for k, v in sorted(NODE.iteritems(), key=lambda a: a[1].count('/')):
+        print zk.create(v, makepath=True)
+
+
+root_nodes = [
+    {"id": 1, "pId": 0, "name": "online"},
+]
+
+l1_nodes = [
+    {"id": 11, "pId": 1, "name": "apps"},
+    {"id": 12, "pId": 1, "name": "mm"},
+    {"id": 13, "pId": 1, "name": "sa"},
+]
+
+l2_nodes = [
+    {"id": 111, "pId": 11, "name": "web-comment-read"},
+    {"id": 112, "pId": 11, "name": "web-comment-write"},
+    {"id": 113, "pId": 11, "name": "web-api"},
+    {"id": 114, "pId": 11, "name": "web-startpage"},
+    {"id": 121, "pId": 12, "name": "web-eboos"},
+    {"id": 122, "pId": 12, "name": "web-video"},
+    {"id": 123, "pId": 12, "name": "web-music"},
+    {"id": 124, "pId": 12, "name": "web-wallpaper"},
+    {"id": 131, "pId": 13, "name": "nginx-external"},
+    {"id": 132, "pId": 13, "name": "nginx-internal"},
+    {"id": 133, "pId": 13, "name": "nginx-cdn"},
+    {"id": 134, "pId": 13, "name": "hadoop-sre"},
+]
+
+l3_nodes = [
+    {"id": 1111, "pId": 111, "name": "hy"},
+    {"id": 1112, "pId": 111, "name": "db"},
+    {"id": 1113, "pId": 111, "name": "hlg"},
+    {"id": 1121, "pId": 112, "name": "hy"},
+    {"id": 1122, "pId": 112, "name": "db"},
+    {"id": 1123, "pId": 112, "name": "hlg"},
+    {"id": 1131, "pId": 113, "name": "hy"},
+    {"id": 1132, "pId": 113, "name": "db"},
+    {"id": 1133, "pId": 113, "name": "hlg"},
+    {"id": 1141, "pId": 114, "name": "hy"},
+    {"id": 1142, "pId": 114, "name": "db"},
+    {"id": 1143, "pId": 114, "name": "hlg"},
+    {"id": 1311, "pId": 131, "name": "hy"},
+    {"id": 1312, "pId": 131, "name": "db"},
+    {"id": 1313, "pId": 131, "name": "hlg"},
+]
+#l1_nodes, l2_nodes, l3_nodes = [],[],[]
+#l1_nodes_id = [(n,1) for n in xrange(2,9)]
+#l2_nodes_id = [(n,random.choice(xrange(2,9))) for n in xrange(10,99)]
+#l3_nodes_id = [(n,random.choice(xrange(10,99))) for n in xrange(100,999)]
+#for id,pid in l1_nodes_id:
+    #l1_nodes.append({'id':id, 'pid':pid, 'name':str(random.randint(1,999999))})
+#for id,pid in l2_nodes_id:
+    #l2_nodes.append({'id':id, 'pid':pid, 'name':str(random.randint(1,999999))})
+#for id,pid in l3_nodes_id:
+    #l3_nodes.append({'id':id, 'pid':pid, 'name':str(random.randint(1,999999))})
+
+
+def init_tree():
+    tree = root_nodes + l1_nodes + l2_nodes + l3_nodes
+    print zk.create_new_tree(tree)
+
+
+def init_servers():
+    count = {
+        'server': 0
+    }
+
+    def get_server(prefix, idc, count):
+        count['server'] += 1
+        return '%s%s.%s01' % (prefix, count['server'], idc)
+
+    for i in l3_nodes:
+        # app server
+        for j in xrange(5):
+            server = get_server('app', i['name'], count)
+            print server
+            #zk.add_node_servers(i['id'], server)
+
+        # db server
+        for j in xrange(2):
+            server = get_server('db', i['name'], count)
+            print server
+            #zk.add_node_servers(i['id'], server)
+
+
+def clear_all():
+    zk.delete('/loki', recursive=True)
+    pass
+
+
+def get_children():
+    print zk.get_children(sys.argv[2])
+
+
+def main():
+    cmd_list = ['init_path', 'init_tree', 'init_servers',
+                'clear_all', 'get_children']
+
+    try:
+        cmd = sys.argv[1]
+    except IndexError:
+        print 'command should be passed: %s' % cmd_list
+        sys.exit(1)
+    assert cmd in cmd_list, 'cmd should be one of %s' % cmd_list
+
+    globals()[cmd]()
+
+
+if __name__ == "__main__":
+    main()

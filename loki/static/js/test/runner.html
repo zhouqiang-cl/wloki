@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head lang="en">
+    <meta charset="utf-8"/>
+    <title>Test Runner</title>
+    <link rel="stylesheet" type="text/css" href="../../css/lib/jasmine.css">
+    <script src="../lib/jasmine.js"></script>
+    <script src="../lib/jasmine-html.js"></script>
+    <script>
+        /**
+         * Helper function for readability above.
+         */
+        function extend(destination, source) {
+            for (var property in source) destination[property] = source[property];
+            return destination;
+        }
+        window.jasmine = jasmineRequire.core(jasmineRequire);
+        jasmineRequire.html(jasmine);
+        var env = jasmine.getEnv();
+        var jasmineInterface = jasmineRequire.interface(jasmine, env);
+        extend(window, jasmineInterface);
+
+
+        /**
+         * ## Runner Parameters
+         *
+         * More browser specific code - wrap the query string in an object and to allow for getting/setting parameters from the runner user interface.
+         */
+
+        var queryString = new jasmine.QueryString({
+            getWindowLocation: function() { return window.location; }
+        });
+
+        var catchingExceptions = queryString.getParam("catch");
+        env.catchExceptions(typeof catchingExceptions === "undefined" ? true : catchingExceptions);
+
+        var throwingExpectationFailures = queryString.getParam("throwFailures");
+        env.throwOnExpectationFailure(throwingExpectationFailures);
+
+        /**
+         * ## Reporters
+         * The `HtmlReporter` builds all of the HTML UI for the runner page. This reporter paints the dots, stars, and x's for specs, as well as all spec names and all failures (if any).
+         */
+        var htmlReporter = new jasmine.HtmlReporter({
+        env: env,
+        onRaiseExceptionsClick: function() { queryString.navigateWithNewParam("catch", !env.catchingExceptions()); },
+        onThrowExpectationsClick: function() { queryString.navigateWithNewParam("throwFailures", !env.throwingExpectationFailures()); },
+        addToExistingQueryString: function(key, value) { return queryString.fullStringWithNewParam(key, value); },
+        getContainer: function() { return document.body; },
+        createElement: function() { return document.createElement.apply(document, arguments); },
+        createTextNode: function() { return document.createTextNode.apply(document, arguments); },
+        timer: new jasmine.Timer()
+        });
+
+        /**
+         * The `jsApiReporter` also receives spec results, and is used by any environment that needs to extract the results  from JavaScript.
+         */
+        env.addReporter(jasmineInterface.jsApiReporter);
+        env.addReporter(htmlReporter);
+
+        /**
+         * Filter which specs will be run by matching the start of the full name against the `spec` query param.
+         */
+        /*
+        var specFilter = new jasmine.HtmlSpecFilter({
+        filterString: function() { return queryString.getParam("spec"); }
+        });
+
+        env.specFilter = function(spec) {
+            return specFilter.matches(spec.getFullName());
+        };
+        */
+    </script>
+
+    <script src="../require-config.js"></script>
+    <script>
+        require.baseUrl = '../';
+    </script>
+    <script src="../lib/require.js"></script>
+</head>
+<body>
+
+    <script>
+        require([
+            'spec/util_oop.js',
+        ], function() {
+
+            htmlReporter.initialize(); env.execute();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends 'base/default.html' %}
+
+
+{% block css %}
+<!--build:css /static/css/readme.css-->
+<link rel="stylesheet" href="/static/css/lib/github-markdown.css" media="all">
+<link rel="stylesheet" href="/static/css/readme.css" media="all">
+<!--endbuild-->
+{% endblock %}
+
+
+{% block main %}
+<div class="markdown-body panel">
+{{ readme }}
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<!-- build:js /static/js/readme.js -->
+<script src="/static/js/readme.js"></script>
+<!-- endbuild -->
+{% endblock %}

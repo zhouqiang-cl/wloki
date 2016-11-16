@@ -1,0 +1,83 @@
+#sidebar .content redis_list {
+	font-size: 14px;
+    position: relative;
+    height: 100%;
+}
+.collapse {
+	float: right;
+	cursor: pointer;
+}
+.main-search > form > input,
+.main-search > form > button {
+    font-size: 1.5em;
+    padding: 8px;
+}
+.main-search > form > input {
+    border: 0;
+    border-bottom: 1px solid #888;
+    display: inline-block;
+    width: calc(100% - 115px);
+    box-sizing: border-box;
+    outline: none;
+    background: transparent;
+    margin: 0 0 20px;
+}
+.main-search > form > button {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100px;
+    margin: 0;
+    margin-left: 10px;
+    border: 0;
+}
+.main-button {
+	margin: 20px 0 0 0;
+}
+.panel {
+	margin-bottom: 10px;
+}
+.panel .subtitle {
+    padding-top: 8px;
+    font-size: 15px;
+}
+.button-good {
+    background: rgb(28, 184, 65);
+}
+.button-bad {
+    background: rgb(255, 0, 0);
+}
+.button-auto {
+	padding: 4px;
+	margin-right: 5px;
+}
+.button-fix {
+	width: 30px;
+	padding: 4px;
+	margin-right: 2px;
+}
+.action-button {
+	display: inline-block;
+	margin-left: 20px;
+}
+table {
+	width: 100%;
+}
+tr {
+	font-size: 13px;
+}
+dt, dd {
+	font-size: 14px;
+}
+dd {
+	font-weight: bold;
+}
+.modal {
+	width: 400px;
+	margin: 0 -200px;
+}
+.footer > div {
+	float: right;
+}
+.highlight {
+	color: red;
+}

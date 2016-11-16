@@ -1,0 +1,93 @@
+{% extends 'base/default.html' %}
+
+
+{% block css %}
+<!-- build:css /static/css/home.css -->
+<link rel="stylesheet" href="/static/css/lib/pikaday.css" media="all">
+<link rel="stylesheet" href="/static/css/home.css" media="all">
+<!-- endbuild -->
+{% endblock %}
+
+
+{% block main %}
+
+{% include 'includes/timepicker-widget.html' %}
+
+<div id="panel-homepage" class="pure-g">
+
+    <div class="pure-u-1">
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <div id="panel-1" class="panel chart-panel">
+                    <div class="title"></div>
+                    <div class="content"></div>
+                </div>
+            </div>
+            <div class="pure-u-1-2">
+                <div id="panel-2" class="panel chart-panel">
+                    <div class="title"></div>
+                    <div class="content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pure-u-1">
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <div id="panel-5" class="panel chart-panel" data-with-legend-toggler="true">
+                    <div class="title"></div>
+                    <div class="content"></div>
+                </div>
+            </div>
+            <div class="pure-u-1-2">
+                <div id="panel-6" class="panel chart-panel" data-with-legend-toggler="true">
+                    <div class="title"></div>
+                    <div class="content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pure-u-1">
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <div id="panel-3" class="panel chart-panel domain-panel">
+                    <div class="title"></div>
+                    <div class="content"></div>
+                </div>
+            </div>
+            <div class="pure-u-1-2">
+                <div id="panel-4" class="panel chart-panel domain-panel">
+                    <div class="title"></div>
+                    <div class="content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pure-u-1">
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <div id="panel-7" class="panel chart-panel">
+                    <div class="title"></div>
+                    <div class="content"></div>
+                </div>
+            </div>
+            <div class="pure-u-1-2">
+                <div id="panel-8" class="panel chart-panel">
+                    <div class="title"></div>
+                    <div class="content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<!-- build:js /static/js/home.js -->
+<script src="/static/js/home.js"></script>
+<!-- endbuild -->
+{% endblock %}

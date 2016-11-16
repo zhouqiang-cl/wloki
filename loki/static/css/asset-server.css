@@ -1,0 +1,10 @@
+
+.body-container {
+    display: block;
+}
+
+.body-container > .server-detail {
+    margin: 0 auto;
+    width: 500px;
+    overflow-y: auto;
+}

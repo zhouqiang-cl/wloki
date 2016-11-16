@@ -1,0 +1,343 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+'''
+daemon for draw service
+'''
+
+__author__ = 'zhouqiang@nosa.me'
+
+
+import os
+import sys
+import time
+import shlex
+import datetime
+import traceback
+from tailer import follow
+from urlparse import urlparse
+from pynginxconfig import NginxConfig
+from multiprocessing import Process, Queue, Manager
+
+from loki.libs.log import logger
+from loki.libs.tsdb import OpenTSDB
+
+
+def get_domain(url):
+    if not url.startswith('http'):
+        url = 'http://' + url
+    url = urlparse(url)
+    domain = url.hostname
+    return domain
+
+def get_path(url):
+    if not url.startswith('http'):
+        url = 'http://' + url
+    url = urlparse(url)
+    return url.path
+
+def get_config_from_dict(manager, domain):
+    return manager[domain] if domain in manager else None
+
+def scan_urls_in_domain(domain, manager, result_queue):
+    config = get_config_from_dict(manager,domain)
+    logfile = config['logfile']
+    urls = config['urls']
+    code_index = config['code_index']
+    resp_time_index = config['resp_time_index']
+    last_request_time = None
+    parse_data = dict()
+    domain = get_domain(urls[0])
+    paths = map(get_path, urls)
+    start = time.time()
+    i = m =0
+    for line in follow(open(logfile), delay=0.01):
+        i += 1
+        line_split_list = shlex.split(line)
+        try:
+            local_path = line_split_list[5].split()[1]
+        except Exception as e:
+            continue
+        local_path = local_path.split('?')[0]
+        if not local_path in paths:
+            continue
+        reg_time = line_split_list[3].strip('[')
+        reg_time = datetime.datetime.strptime(reg_time, \
+            '%d/%b/%Y:%H:%M:%S')
+        reg_time = int(time.mktime(reg_time.timetuple()))
+        if not last_request_time:
+            last_request_time = int(time.time())/60*60
+        if time.time() - start > 1:
+            m += 1
+            start = time.time()
+            i = 0
+        if reg_time - last_request_time > 70:
+            if last_request_time in parse_data:
+                result_queue.put([last_request_time, \
+                    parse_data[last_request_time]])
+                del parse_data[last_request_time]
+            last_request_time = reg_time/60*60
+        count_time = reg_time/60*60
+        resp_time = line_split_list[resp_time_index - 1]
+        resp_code = line_split_list[code_index - 1]
+        if count_time not in parse_data:
+            parse_data[count_time] = dict()
+        if domain not in parse_data[count_time]:
+            parse_data[count_time][domain] = dict()
+        if local_path not in parse_data[count_time][domain]:
+            parse_data[count_time][domain][local_path] = dict()
+        if resp_code not in parse_data[count_time][domain][local_path]:
+            parse_data[count_time][domain][local_path][resp_code] = dict()
+            parse_data[count_time][domain][local_path][resp_code]['count'] = 0
+            parse_data[count_time][domain][local_path][resp_code]['resp_time'] = 0
+        if str(resp_code) == '200':
+            if ':' in resp_time:
+                r = 0
+                resp_time = resp_time.split(':')
+                for s in resp_time:
+                    r += float(s)
+                resp_time = r
+            parse_data[count_time][domain][local_path][resp_code]['resp_time'] \
+                += int(float(resp_time)*1000)
+            if 'median' not in parse_data[count_time][domain][local_path][resp_code]:
+                parse_data[count_time][domain][local_path][resp_code]['median'] = list()
+            parse_data[count_time][domain][local_path][resp_code]['median'].append(float(resp_time)*1000)
+        parse_data[count_time][domain][local_path][resp_code]['count'] += 1
+
+class Availability(object):
+
+    def __init__(self):
+        self.nginx_conf_dir = '/home/work/nginx/conf/sites-available'
+        self.nginx_main_conf = '/home/work/nginx/conf/nginx.conf'
+        self.log_dir = '/home/work/nginx/logs'
+        self.tsdb = OpenTSDB()
+        self.main_conf = None
+        self.result_queue = Queue()
+        self.configs = Manager()
+        self.process_info = dict()
+        self.urls = list()
+
+    def get_main_conf(self):
+        nc = NginxConfig()
+        nc.load(open(self.nginx_main_conf).read())
+        self.main_conf = nc
+
+    def list_files(self, path):
+        return filter(os.path.isfile,
+            map(lambda sname: os.path.join(path, sname),
+                os.listdir(path)))
+
+    def get_config(self, domain):
+        try:
+            find = False
+            for f in self.list_files(self.nginx_conf_dir):
+                if f.startswith('.'):
+                    continue
+                f = self.nginx_conf_dir + '/' + f
+                nc = NginxConfig()
+                nc.load(open(f).read())
+                for conf in nc:
+                    for items in conf['value']:
+                        if 'server_name' in items and domain in items[1].split(' '):
+                            find = True
+                            break
+                    if find:
+                        for items in conf['value']:
+                            if 'access_log' in items:
+                                access_log = items[1]
+                                logfile = access_log.split(" ")[0]
+                                code_index = 7
+                                resp_time_index = 15
+                                try:
+                                    logformat = access_log.split()[1]
+                                    if not self.main_conf:
+                                        self.get_main_conf()
+                                    for conf in (x for x in self.main_conf if 'value' in conf):
+                                        try:
+                                            for items in (x for x in conf['value'] if 'log_format' in x):
+                                                if logformat == shlex.split(items[1][0])[0]:
+                                                    log_array = ''.join(items[1]).replace('\'','').split(' ')
+                                                    if '"$request_time"' in log_array:
+                                                        resp_time_index = log_array.index('"$request_time"')
+                                                    elif '"$upstream_response_time"' in log_array:
+                                                        resp_time_index = log_array.index('"$upstream_response_time"')
+                                                    code_index = log_array.index('$status')
+                                        except Exception as e:
+                                            print str(e)
+                                except:
+                                    pass
+                                logfile = self.log_dir + '/' + os.path.basename(logfile)
+                                retval = dict()
+                                retval['logfile'] = logfile
+                                retval['code_index'] = code_index
+                                retval['resp_time_index'] = resp_time_index
+
+                                return retval
+            raise Exception('can not find domain log file for %s' % domain)
+        except Exception as e:
+            raise e
+
+    def get_configs(self, urls):
+        domains = list()
+        domain_url_dict = dict()
+        domain_logfile_dict = dict()
+        logfile_url_dict = dict()
+        for url in urls:
+            try:
+                domain = get_domain(url)
+            except Exception as e:
+                logger.info('can not get domain of url %s,error %s, \
+                    pass to next url' % (url, str(e)))
+                continue
+            domains.append(domain)
+            if domain not in domain_url_dict:
+                domain_url_dict[domain] = list()
+            domain_url_dict[domain].append(url)
+        domains = list(set(domains))
+        configs = dict()
+        for domain in domains:
+            try:
+                domain_config = self.get_config(domain)
+                # configs
+                if domain_config:
+                    configs[domain] = dict()
+                    configs[domain]['logfile'] = domain_config['logfile']
+                    configs[domain]['code_index'] = domain_config['code_index']
+                    configs[domain]['resp_time_index'] = domain_config['resp_time_index']
+                    configs[domain]['urls'] = domain_url_dict[domain]
+            except Exception as e:
+                logger.info('get nginx log file error,%s,pass to next domain' % str(e))
+                raise e
+        return configs
+
+    def save_configs(self, configs):
+        self.configs = configs
+ 
+    def start_scan(self, domain, configs, result_queue):
+        p = Process(target=scan_urls_in_domain, \
+            args=(domain, configs, result_queue))
+        p.start()
+        self.process_info[domain] = p.pid
+
+    def update_urls(self):
+        self.urls.append('account.nosa.me/v4/api/profile')
+        self.urls.append('www.nosa.me/')
+
+    def stop_scan(self, pid):
+        os.kill(pid, 9)
+
+    def main_loop(self):
+        while True:
+            try:
+                self.update_urls()
+                configs = self.get_configs(self.urls)
+                self.save_configs(configs)
+                for config in configs:
+                    if not config in self.process_info:
+                        self.start_scan(config, self.configs, self.result_queue)
+                        print 'start scan %s' % config
+                for config in self.process_info:
+                    if not config in configs:
+                        self.stop_scan(self.process_info[config])
+                        print 'stop scan %s' % config
+                time.sleep(0.5)
+                try:
+                    while 1:
+                        timestamp,result = self.result_queue.get(timeout=0.1)
+                        self.feed_data(timestamp,result)
+                except Exception as e:
+                    continue
+            except Exception as e:
+                print str(e)
+
+    def compute(self, timestamp, result):
+        try:
+            limit_code = ['200', '499', '502']
+            compute_result = dict()
+            for domain in result:
+                for path in result[domain]:
+                    total_code = 0
+                    for code in result[domain][path]:
+                        if code in limit_code:
+                            total_code += result[domain][path][code]['count']
+                    if not total_code:
+                        continue
+                    count_code = result[domain][path]['200']['count']
+                    if not count_code:
+                        count_code = 0
+                    if domain not in compute_result:
+                        compute_result[domain] = dict()
+                    compute_result[domain][path] = dict()
+                    if not total_code:
+                        continue
+                    compute_result[domain][path]['sa'] = \
+                        float(count_code)/float(total_code)*100
+                    if count_code != 0:
+                        compute_result[domain][path]['rt'] = \
+                            float(result[domain][path]['200']['resp_time']) / \
+                                result[domain][path]['200']['count']
+            return compute_result
+        except:
+            traceback.print_exc()
+    def feed_data(self, timestamp, result):
+        tsdbdata = list()
+        try:
+            for domain in result:
+                for path in result[domain]:
+                    for code in result[domain][path]:
+                        data = dict()
+                        data['metric'] = 'http.raw'
+                        data['timestamp'] = timestamp
+                        data['value'] = result[domain][path][code]['count']
+                        data['tags'] = dict()
+                        data['tags']['code'] = code
+                        data['tags']['path'] = path
+                        data['tags']['domain'] = domain
+                        if code == 200:
+                            data['tags']['resp_time'] = \
+                                result[domain][path][code]['resp_time']
+                        tsdbdata.append(data)
+            compute_result = self.compute(timestamp, result)
+            for domain in compute_result:
+                for path in compute_result[domain]:
+                    data = dict()
+                    data['metric'] = 'http.sa'
+                    data['timestamp'] = timestamp
+                    data['value'] = compute_result[domain][path]['sa']
+                    data['tags'] = dict()
+                    data['tags']['path'] = path
+                    data['tags']['domain'] = domain
+                    tsdbdata.append(data)
+                    data = dict()
+                    data['metric'] = 'http.rt'
+                    data['timestamp'] = timestamp
+                    data['value'] = compute_result[domain][path]['rt']
+                    data['tags'] = dict()
+                    data['tags']['path'] = path
+                    data['tags']['domain'] = domain
+                    tsdbdata.append(data)
+                    data = dict()
+                    data['metric'] = 'http.rt'
+                    data['timestamp'] = timestamp
+                    media = (len(result[domain][path][code]['median']) + 1)/2
+                    data['value'] = result[domain][path][code]['median'].sort()[media]
+                    data['tags'] = dict()
+                    data['tags']['path'] = path
+                    data['tags']['domain'] = domain
+                    data['tags']['type'] = 'intermediate'
+                    tsdbdata.append(data)
+        except Exception as e:
+            print str(e)
+            raise e
+        try:
+            self.tsdb.send(tsdbdata)
+        except Exception as e:
+            print str(e)
+            raise e
+
+def main():
+    a = Availability()
+    a.main_loop()
+
+if __name__ == "__main__":
+    main()

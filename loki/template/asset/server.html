@@ -1,0 +1,26 @@
+{% extends 'base/plain.html' %}
+
+{% block css %}
+<!--build:css /static/css/asset-server.css-->
+<link rel="stylesheet" href="/static/css/asset.css" media="all">
+<link rel="stylesheet" href="/static/css/asset-server.css" media="all">
+<!--endbuild-->
+{% endblock %}
+
+
+{% block main %}
+
+<input type="hidden" name="sn" value="{{ sn }}">
+
+<div class="server-detail panel">
+</div>
+
+{% include 'asset/server_template.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/asset-server.js -->
+<script src="/static/js/asset-server.js"></script>
+<!-- endbuild -->
+{% endblock %}

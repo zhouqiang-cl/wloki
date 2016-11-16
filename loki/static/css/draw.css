@@ -1,0 +1,77 @@
+/*
+input.datepicker {
+    border: 1px solid #888;
+    border-radius: 2px;
+    margin: 0 8px;
+    padding: 3px 5px;
+    font-size: 14px;
+    color: #333;
+    width: 85px;
+}
+input.datepicker:focus {
+    background-color: #DFF2FF;
+}
+*/
+#tab-1 {
+    font-size: 13px;
+}
+
+.servers {
+    margin-bottom: 15px;
+}
+
+/* Column 1, checkbox */
+.servers table > thead > tr > th:nth-child(1),
+.servers table > tbody > tr > td:nth-child(1) {
+    width: 44px;
+    padding: 0;
+}
+.servers table > thead > tr > th:nth-child(1) label,
+.servers table > tbody > tr > td:nth-child(1) label {
+    padding: 8px 20px 8px 15px;
+    cursor: pointer;
+}
+/* Column 2, server */
+.servers table > thead > tr > th:nth-child(2),
+.servers table > tbody > tr > td:nth-child(2) {
+    white-space: nowrap;
+}
+
+.servers label.selectall {
+}
+
+.servers table tbody td {
+    text-align: center;
+    height: 25px;
+}
+.servers table tbody td.dataTables_empty {
+    height: 65px;
+    line-height: 65px;
+}
+
+.servers table tbody td span.error {
+    color: #999;
+}
+
+.dataTables_scrollBody {
+    /*-webkit-transition: height 0.1s;*/
+}
+
+.input-label {
+    font-size: 14px;
+    line-height: 33px;
+    text-align: left;
+    margin-left: 5px;
+}
+
+.chart-panel > .content {
+    height: 300px;
+}
+
+.panel > .title {
+    font-size: 1.5em;
+}
+
+#panel-system-container {
+    margin-top: 30px;
+}

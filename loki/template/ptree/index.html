@@ -1,0 +1,330 @@
+{% extends 'base/default.html' %}
+
+
+{% block css %}
+<!-- build:css /static/css/ptree.css -->
+<link rel="stylesheet" href="/static/css/lib/jquery.dataTables.css" media="all">
+<link rel="stylesheet" href="/static/css/ptree.css" media="all">
+<!-- endbuild -->
+{% endblock %}
+
+
+{% block main %}
+
+<div class="container">
+
+    <div class="tabs">
+        <ul class="tabs-nav clearfix">
+            <li><a alt="#tab-1" href="?tab=1">节点管理</a></li>
+            <li><a alt="#tab-2" href="?tab=2">服务器关联</a></li>
+            <li><a alt="#tab-3" href="?tab=3">域名关联</a></li>
+            <li><a alt="#tab-4" href="?tab=4">Upstream 管理</a></li>
+        </ul>
+
+        <div id="tab-1" class="pure-g tab-content">
+
+            <div class="pure-u-1 panel node-detail">
+                <div class="title">节点详细信息</div>
+                <div class="content">
+                    <dl style="display: none;">
+                        <dt>ID</dt>
+                        <dd class="k-id"></dd>
+                        <dt>名称</dt>
+                        <dd class="k-name"></dd>
+                        <dt>路径</dt>
+                        <dd class="k-dir"></dd>
+                        <dt>负责人</dt>
+                        <dd class="k-contacter"></dd>
+                    </dl>
+                    <div class="placeholder">请选择节点</div>
+                </div>
+                <div class="actions">
+                    <button class="pure-button pure-button-primary fn-add-node-modal" disabled>添加子节点</button>
+                    <button class="pure-button button-orange fn-rename-node-modal" disabled>重命名节点</button>
+                    <button class="pure-button button-orange fn-move-node-modal" disabled>移动节点</button>
+                    <button class="pure-button button-red fn-delete-node">删除节点</button>
+                    <button class="pure-button button-orange fn-add-contacter-modal">添加负责人</button>
+                </div>
+            </div>
+
+            <!-- Modals -->
+            <div class="pure-u-1">
+                <div class="modal fade add-node-modal" style="display: none;">
+                    <form class="add-node-form">
+                        <div class="header">添加节点</div>
+                        <div class="body">
+                            <input type="text" class="pure-input" placeholder="节点名称">
+                        </div>
+                        <div class="footer">
+                            <button type="submit" class="pure-button pure-button-primary fn-add-node">提交</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal fade rename-node-modal" style="display: none;">
+                    <form action="" class="rename-node-form">
+                        <div class="header">重命名节点</div>
+                        <div class="body">
+                            <input type="text" class="pure-input" placeholder="节点新名称">
+                        </div>
+                        <div class="footer">
+                            <button type="submit" class="pure-button pure-button-primary fn-rename-node">提交</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal fade move-node-modal" style="display: none;">
+                    <div class="header">移动节点</div>
+                    <div class="body">
+                        <p>
+                            移动至节点: <span class="move-to-node"></span>
+                        </p>
+                        <div class="ptree-wrapper">
+                            <div class="ptree"></div>
+                            <input type="text" class="pure-input search-input" placeholder="搜索父节点">
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <button class="pure-button pure-button-primary fn-move-node" disabled>提交</button>
+                    </div>
+                </div>
+
+                <div class="modal fade add-contacter-modal" style="display: none;">
+                    <div class="header">添加负责人</div>
+                    <div class="body">
+                        <input type="text" class="pure-input" placeholder="负责人邮箱">
+                    </div>
+                    <div class="footer">
+                        <button class="pure-button pure-button-primary fn-add-contacter">提交</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="tab-2" class="pure-g tab-content">
+            <div class="pure-u-5-12">
+                <div class="node-servers servers panel">
+                    <div class="title">当前节点机器</div>
+
+                    <div class="search">
+                        <input class="fn-search pure-input" type="text">
+                    </div>
+
+                    <table class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Hostname</th>
+                                <th>流量比率</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="server-buttons pure-u-1-6">
+                <div class="content">
+                    <button class="pure-button fn-add-servers" disabled>关联 <i class="fa fa-angle-double-left"></i></button>
+                    <button class="pure-button fn-remove-servers" disabled>解除 <i class="fa fa-angle-double-right"></i></button>
+                    <button class="pure-button fn-show-traffic-ratio-modal" disabled>调整流量</button>
+                </div>
+            </div>
+
+            <div class="pure-u-5-12">
+                <div class="free-servers servers panel">
+                    <div class="title">可分配机器</div>
+
+                    <div class="search">
+                        <input class="fn-search pure-input" type="text">
+                    </div>
+
+                    <table class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Hostname</th>
+                                <th>关联数</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="server-extra-buttons">
+                    <button class="pure-button fn-show-paste-modal"><i class="fa fa-clipboard"></i>使用文本关联</button>
+                </div>
+            </div>
+
+            <div class="pure-u-1">
+                <div class="modal fade paste-modal" style="display: none;">
+                    <div class="header">文本关联服务器</div>
+                    <div class="body">
+                        <textarea class="pure-input" placeholder="粘贴服务器名称，换行分隔"></textarea>
+                    </div>
+                    <div class="footer">
+                        <button class="pure-button pure-button-primary fn-paste-servers">提交</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pure-u-1">
+                <div class="modal fade traffic-ratio-modal" style="display: none;">
+                    <form class="traffic-ratio-form">
+                    <div class="header">更改流量比率</div>
+                    <div class="body">
+                        <div class="hostnames"></div>
+                        <div class="values">
+                            <!--
+                             -->
+                            <div class="ranger">
+                                <span class="range-value min">0</span>
+                                <input type="range" step="0.1" min="0" name="_traffic_ratio" id="">
+                                <span class="range-value max"></span>
+                            </div>
+                            <input class="pure-input" type="number"
+                             step="0.1" min="0" name="traffic_ratio"
+                             placeholder="留空表示自动分配">
+                             <!--
+                             <div style="display: inline-block; height: 50px; background: #aaa;">
+                             <div class="value" style="display: inline-block; height: 30px; background: #aaa">
+                                 123
+                             </div>
+                             <div class="value" style="display: inline-block; height: 30px; background: #aaa">
+                                 123
+                             </div>
+                             </div>
+                             -->
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <button class="pure-button pure-button-primary fn-update-traffic-ratio">提交</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-3" class="tab-content">
+            <form class="pure-form">
+                <fieldset>
+                    <input id="domain" placeholder="domain" />
+                    <input id="path" placeholder="path" />
+                    <a id="add_url_btn" class="pure-button pure-button-primary"/>bind</a>
+                </fieldset>
+            </form>
+            <form class="pure-form">
+                <fieldset>
+                    <select data-placeholder="domains" id="domain_select"></select>
+                    <a id="delete_domain_btn" class="pure-button pure-button-primary"/>delete</a>
+                </fieldset>
+            </form>
+            <!--
+            <div class="node-urls urls panel">
+                <div class="title">所有 url</div>
+
+                <div class="search">
+                    <input class="fn-search pure-input" type="text">
+                </div>
+                <table class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>domain</th>
+                            <th>path</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            -->
+        </div>
+
+        <div id="tab-4" class="pure-g tab-content">
+
+            <div class="pure-u-1 panel upstream-detail">
+                <div class="title">Upstream 具体信息</div>
+                <div class="content">
+                    <dl style="display: none;">
+                        <dt>名称</dt>
+                        <dd class="k-name"></dd>
+                        <dt>端口</dt>
+                        <dd class="k-port"></dd>
+                        <dt>IP HASH</dt>
+                        <dd class="k-ip_hash"></dd>
+                        <dt>Docker</dt>
+                        <dd class="k-isDocker"></dd>
+                        <dt>外部端口</dt>
+                        <dd class="k-publishedPort"></dd>
+                    </dl>
+                    <div class="placeholder">请选择节点</div>
+                </div>
+                <div class="actions">
+                    <button class="pure-button pure-button-primary fn-change-name-modal" disabled>修改名称</button>
+                    <button class="pure-button button-orange fn-change-port-modal" disabled>修改端口</button>
+                    <button class="pure-button button-orange fn-change-ip_hash-modal" disabled>修改 IP HASH</button>
+                    <button class="pure-button button-orange fn-change-isDocker-modal" disabled>使用 Docker</button>
+                    <button class="pure-button button-orange fn-change-publishedPort-modal" disabled>修改外部端口</button>
+                    <button class="pure-button button-red fn-delete-upstream" disabled>删除 Upstream</button>
+                </div>
+            </div>
+
+            <!-- Modals -->
+            <div class="pure-u-1">
+                <div class="modal fade change-name-modal" style="display: none;">
+                    <div class="header">修改名称</div>
+                    <div class="body">
+                        <input type="text" class="pure-input" placeholder="新名称">
+                    </div>
+                    <div class="footer">
+                        <button class="pure-button pure-button-primary fn-change-name">提交</button>
+                    </div>
+                </div>
+
+                <div class="modal fade change-port-modal" style="display: none;">
+                    <div class="header">修改端口</div>
+                    <div class="body">
+                        <input type="text" class="pure-input" placeholder="新端口">
+                    </div>
+                    <div class="footer">
+                        <button class="pure-button pure-button-primary fn-change-port">提交</button>
+                    </div>
+                </div>
+
+                <div class="modal fade change-ip_hash-modal" style="display: none;">
+                    <div class="header">修改 IP HASH</div>
+                    <div class="body">
+                        <input type="text" class="pure-input" placeholder="开启写1, 关闭写0">
+                    </div>
+                    <div class="footer">
+                        <button class="pure-button pure-button-primary fn-change-ip_hash">提交</button>
+                    </div>
+                </div>                    
+
+                <div class="modal fade change-isDocker-modal" style="display: none;">
+                    <div class="header">是否使用 Docker, 如果使用 port 和 ip_hash 无效</div>
+                    <div class="body">
+                        <input type="text" class="pure-input" placeholder="使用写1, 不使用写0">
+                    </div>
+                    <div class="footer">
+                        <button class="pure-button pure-button-primary fn-change-isDocker">提交</button>
+                    </div>
+                </div>
+
+                <div class="modal fade change-publishedPort-modal" style="display: none;">
+                    <div class="header">修改外部端口</div>
+                    <div class="body">
+                        <input type="text" class="pure-input" placeholder="新外部端口">
+                    </div>
+                    <div class="footer">
+                        <button class="pure-button pure-button-primary fn-change-publishedPort">提交</button>
+                    </div>
+                </div>                    
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/ptree.js -->
+<script src="/static/js/ptree.js"></script>
+<!-- endbuild -->
+{% endblock %}

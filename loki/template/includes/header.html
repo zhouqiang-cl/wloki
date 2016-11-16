@@ -1,0 +1,80 @@
+    <header>
+        <!-- <nav class="pure-menu pure-menu-open pure-menu-horizontal"> -->
+        <nav>
+            <a id="logo" href="/"><span>Loki</span></a>
+            {% set nav_items = [
+                [
+                    ('javascript: void(0);', 'area-chart', '数据展示 <i class="fa fa-caret-down"></i>', ''),
+                    ('/draw', 'area-chart', '系统展示', 'jump-node'),
+                    ('/domains', 'chain', '域名展示', ''),
+                    ('http://loki.nosa.me/customv2/dashboard/db/nosalabs?theme=light', 'dashboard', '自定义展示', ''),
+                    ('http://loki.nosa.me/mysql/', 'database', '数据库展示', ''),
+                ],
+                [
+                    ('/job', 'tasks', '部署', 'jump-node'),
+                    ('/job/packages', 'book', 'Packages', 'jump-node'),
+                    ('/job/images', 'book', 'Images', 'jump-node'),
+                ],
+                ('/nodes', 'sitemap', '节点', 'jump-node'),
+                ('/asset', 'desktop', '资产', 'jump-node'),
+                [
+                    ('/monitor/relatives', 'sitemap', '监控', 'jump-node'),
+                    ('/monitor/templates', 'sitemap', '模板', 'jump-node'),
+                    ('/monitor/expressions', 'sitemap', '表达式', 'jump-node'),
+                ],
+                ('/privilege', 'sitemap', '权限', 'jump-node'),
+                ('/redis', 'bar-chart', 'Redis', ''),
+                ('/cdn', 'wrench', 'CDN', ''),
+                [
+                    ('javascript: void(0);', 'area-chart', '其他 <i class="fa fa-caret-down"></i>'),
+                    ('/readme', 'book', 'LOKI 文档', ''),
+                ],
+            ] %}
+            {#
+                ('/alarm', 'bell', 'Alarm', ''),
+                ('/monitor', 'desktop', 'Monitor', ''),
+            #}
+            <ul>
+                {% for nav in nav_items %}
+                    {% if is_list(nav) %}
+                        {% set path = nav[0][0] %}
+                        {% set icon = nav[0][1] %}
+                        {% set name = nav[0][2] %}
+                        {% set class_name = nav[0][3] %}
+                    {% else %}
+                        {% set path = nav[0] %}
+                        {% set icon = nav[1] %}
+                        {% set name = nav[2] %}
+                        {% set class_name = nav[3] %}
+                    {% endif %}
+
+                    <li {% if path == url_path %}class="selected"{% endif %}>
+                        {# <a href="{{ path }}"><i class="fa fa-{{ icon }}"></i>{{ name }}</a> #}
+                        <a href="{{ path }}" class="{{ class_name }}"></i>{{ name }}</a>
+                        {% if is_list(nav) %}
+                            <ul>
+                                {% for path, icon, name, class_name in nav[1:] %}
+                                <li>
+                                    <a href="{{ path }}" class="{{ class_name }}"><i class="fa fa-{{ icon }}"></i>{{ name }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+                <!-- Tpl under Job
+                <li><a href="#">Tpl</a></li>-->
+                <!-- Audit under PTree
+                <li><a href="#">Audit</a></li>-->
+                <!-- No need for configuration
+                <a href="/#capacity"><i class="fa fa-tint"></i>Capacity</a>-->
+
+            {% if user %}
+            <ul class="user-menu">
+                <li> <a href="#">{{ user.username }}</a> </li>
+            </ul>
+            {% endif %}
+        </nav>
+    </header>
+

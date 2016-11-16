@@ -1,0 +1,65 @@
+{% extends 'base/plain.html' %}
+
+
+{% block css %}
+<style>
+    body {
+        background: #F2F5F8;
+    }
+    .login {
+        width: 450px;
+        margin: 0 auto;
+        margin-top: 150px;
+        padding: 40px 40px 30px;
+        box-shadow: 0 2px 6px 0 rgba(0,0,0,0.25);
+        border-radius: 4px;
+        background: #fff;
+    }
+    .login legend {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    .login label {
+        font-weight: 700;
+    }
+</style>
+{% endblock %}
+
+
+{% block main %}
+<div class="login pure-u">
+    <form class="pure-form pure-form-stacked" action="" method="POST">
+        <fieldset>
+            <legend>Login</legend>
+
+            <input type="hidden" name="redirect" value="{{ redirect }}">
+
+            {% if error %}
+                <div class="alert alert-danger"><b>{{ error }}</b></div>
+            {% endif %}
+
+            <div class="pure-control-group">
+                <label for="input-username">Username</label>
+                <input id="input-username" class="pure-input-1" name="username" type="text" placeholder="Username" required>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="password">Password</label>
+                <input id="password" class="pure-input-1" name="password" type="password" placeholder="Password" required>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="remember" class="pure-checkbox">
+                    <input id="remember" type="checkbox"> Remember me
+                </label>
+            </div>
+
+            <button type="submit" class="pure-button pure-button-primary">Sign in</button>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}

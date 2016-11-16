@@ -1,0 +1,75 @@
+{% extends 'base/plain.html' %}
+
+{% block css %}
+<!--build:css /static/css/asset.css-->
+<link rel="stylesheet" href="/static/css/lib/jquery.dataTables.css" media="all">
+<link rel="stylesheet" href="/static/css/asset.css" media="all">
+<!--endbuild-->
+{% endblock %}
+
+
+{% block main %}
+
+<div class="left-pane">
+    <div class="left-pane-inner">
+    <div class="search-input">
+        <form>
+            <input type="text" name="fuzzy_word"><!--
+            --><button>Search</button>
+        </form>
+        <div class="close-button">✕</div>
+    </div>
+
+    <div class="asset-main panel" style="display: none;">
+        <div class="dashboard">
+            <h1>Asset Dashboard</h1>
+        </div>
+
+        <div class="search-result">
+            <table class="server-table display">
+                <thead>
+                    <!--
+                    constant fields:
+                    - hostname
+                    - ip
+                    - type
+                    - vm_host
+                    - idc
+                    - sn
+                    -->
+                    <tr>
+                        <th style="width: 120px;">hostname</th>
+                        <th style="width: 30px;">status</th>
+                        <th style="width: 120px;">ip</th>
+                        <th style="min-width: 30px;">type</th>
+                        <th style="min-width: 30px;">idc</th>
+                        <th>sn</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+<div class="right-pane">
+    <div class="close-button">✕</div>
+    <div class="right-pane-inner panel">
+        <div class="server-detail">
+        </div>
+    </div>
+</div>
+
+{% include 'asset/server_template.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/asset.js -->
+<script src="/static/js/asset.js"></script>
+<!-- endbuild -->
+{% endblock %}

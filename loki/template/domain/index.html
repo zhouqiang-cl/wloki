@@ -1,0 +1,24 @@
+{% extends 'base/default.html' %}
+
+
+{% block css %}
+<!-- build:css /static/css/domain.css -->
+<link rel="stylesheet" href="/static/css/lib/pikaday.css" media="all">
+<link rel="stylesheet" href="/static/css/domain.css" media="all">
+<!-- endbuild -->
+{% endblock %}
+
+
+{% block main %}
+
+{% include 'includes/timepicker-widget.html' %}
+
+<div id="panel-domain-container" class="container pure-g">
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/domain.js -->
+<script src="/static/js/domain.js"></script>
+<!-- endbuild -->
+{% endblock %}

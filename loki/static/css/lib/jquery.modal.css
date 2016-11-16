@@ -1,0 +1,154 @@
+
+/* jQuery Modal
+ * Copyright 2014 Kevin Sylvestre
+ * 1.1.7
+ */
+.modal, .vignette, .modaler {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.modaled {
+    overflow: hidden;
+    -webkit-overflow-style: none;
+    -moz-overflow-style: none;
+    -ms-overflow-style: none;
+}
+
+.modaled::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+}
+
+.modaled::-moz-scrollbar {
+    display: none !important;
+    width: 0 !important;
+}
+
+.modaled::-ms-scrollbar {
+    display: none !important;
+    width: 0 !important;
+}
+
+.modaler {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 4000;
+}
+
+.modaler .modal {
+    /*
+    position: relative;
+    top: inherit;
+    left: inherit;
+    right: inherit;
+    margin: 150px auto;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    */
+}
+
+.modal {
+    position: absolute;
+    background: white;
+    top: 20%;
+    left: 50%;
+    right: 50%;
+    width: 620px;
+    margin: 0 -320px;
+    z-index: 4000;
+    box-shadow: 0 2px 8px black;
+    border-radius: 3px;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+}
+
+.modal.fade {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    transform: scale(0.8);
+}
+
+.modal .header, .modal .footer, .modal .body {
+    padding: 10px;
+}
+
+.modal .header:before, .modal .header:after, .modal .footer:before, .modal .footer:after, .modal .body:before, .modal .body:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+.modal .header *, .modal .footer * {
+    margin: 0;
+}
+
+.modal .body {
+    /*min-height: 240px;*/
+    /*max-height: 480px;*/
+    overflow: auto;
+    padding: 20px;
+    height: calc(100% - 130px);
+    box-sizing: border-box;
+}
+
+.modal .header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.modal .footer {
+    border-top: 1px solid #eeeeee;
+    padding: 20px;
+}
+
+.modal .close {
+    color: gray;
+    float: right;
+    display: block;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: center;
+}
+
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 2000;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+.vignette.fade {
+    opacity: 0;
+    filter: alpha(opacity=0);
+}

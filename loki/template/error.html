@@ -1,0 +1,28 @@
+{% extends 'base/default.html' %}
+
+
+{% block css %}
+<!-- build:css /static/css/error.css -->
+<link rel="stylesheet" href="/static/css/home.css" media="all">
+<!-- endbuild -->
+
+<style>
+    .alert {
+        padding: 30px;
+        font-size: 18px;
+    }
+</style>
+{% endblock %}
+
+
+{% block main %}
+
+<div class="alert alert-warning">
+    <i class="fa fa-warning"></i>
+    {{ message }}
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}

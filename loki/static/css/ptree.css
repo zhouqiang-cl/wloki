@@ -1,0 +1,191 @@
+#main .pure-button {
+}
+
+.node-detail > .content {
+    border-bottom: 1px solid #ddd;
+    min-height: 100px;
+    margin-bottom: 15px;
+}
+
+.node-detail > .actions > button {
+    margin-right: 10px;
+}
+
+.move-node-modal {
+    top: 8%;
+    bottom: 8%;
+}
+.move-node-modal .body > p {
+    margin-top: 0;
+    font-size: 14px;
+}
+.move-node-modal .ptree-wrapper {
+    padding: 15px 12px;
+    background: #eee;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: calc(100% - 30px);
+    min-height: 200px;
+}
+.move-node-modal .ptree {
+    height: 330px;
+    overflow: auto;
+    box-sizing: border-box;
+    height: calc(100% - 50px);
+}
+.move-node-modal .search-input {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.servers {
+    padding-bottom: 20px;
+}
+.servers > div table tr td {
+    text-align: left;
+    padding: 10px 12px;
+}
+.servers > div table tr td.dataTables_empty {
+}
+
+
+.server-buttons {
+    position: relative;
+}
+
+.server-buttons .content {
+    position: absolute;
+    top: 40%;
+    left: 0; right: 0;
+}
+
+.server-buttons button {
+    display: block;
+    margin: 0 auto;
+    padding: 6px 0 !important;
+    width: 85px;
+    text-align: center;
+    margin-bottom: 15px;
+    border: 1px solid #aaa;
+}
+.server-buttons button[disabled] {
+    border: 1px solid #aaa;
+}
+
+.server-extra-buttons {
+    text-align: right;
+}
+
+.paste-modal .body  {
+    max-height: 1000px;
+}
+.paste-modal .body > textarea {
+    width: 100%;
+    height: 200px;
+    max-height: 500px;
+    color: #333;
+    font-size: 14px;
+    resize: vertical;
+}
+.paste-modal .footer {
+    text-align: right;
+}
+
+.server_selector {
+    height: 400px;
+    width: 300px;
+}
+
+.search > input {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.itemlist > li > a {
+    padding-left: 35px;
+}
+
+.itemlist > li > input[type=checkbox] {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: 10;
+}
+
+.fn-show-paste-modal {
+    border: 1px solid #aaa;
+}
+
+table .td-symbol {
+    font-size: 1.3em;
+    line-height: 1em;
+}
+button .button-symbol {
+    line-height: 1em;
+    width: 9px;
+    display: inline-block;
+}
+
+.traffic-ratio-modal .body {
+    font-size: 1.1em;
+}
+.traffic-ratio-modal .hostnames {
+    margin: 0 0 15px;
+}
+.traffic-ratio-modal .hostnames > span {
+    margin-right: 10px;
+    text-decoration: underline;
+}
+
+.traffic-ratio-modal .values {}
+
+.traffic-ratio-modal .values .ranger {
+    display: inline-block;
+    width: 50%;
+    border-radius: 3px;
+    background: #eee;
+    padding: 8px 5px;
+}
+
+.traffic-ratio-modal .values .ranger:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+.traffic-ratio-modal .values .ranger > * {
+    display: block;
+    float: left;
+}
+
+.traffic-ratio-modal .values .ranger .range-value {
+    width: 2em;
+    text-align: center;
+}
+
+.traffic-ratio-modal .values .ranger input[type=range] {
+    width: calc(100% - 5em);
+    position: relative;
+    margin: 0 .5em;
+}
+
+.traffic-ratio-modal .values input[type=number] {
+    margin-left: 1em;
+    display: inline-block;
+    width:  25%;
+    vertical-align: top;
+    height: 31px;
+}
+
+.upstream-detail > .content {
+    border-bottom: 1px solid #ddd;
+    min-height: 100px;
+    margin-bottom: 15px;
+}
+
+.upstream-detail > .actions > button {
+    margin-right: 10px;
+}

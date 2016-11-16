@@ -1,0 +1,35 @@
+<div class="modal fade ajax-error-modal" style="display: none;">
+    <div class="header">AJAX 请求错误</div>
+    <div class="body">
+        <div class="alert alert-info">
+            如果你看到这些信息，请报告给
+            <a href="mailto:sre-team@nosa.me">sre-team@nosa.me</a>
+        </div>
+        <section>
+            <h3>Request</h3>
+            <p>
+                <span class="key">url:</span>
+                <span class="value url"></span>
+            </p>
+            <p>
+                <span class="key">method:</span>
+                <span class="value method"></span>
+            </p>
+            <p>
+                <span class="key">data:</span>
+                <span class="value data"></span>
+            </p>
+        </section>
+        <section>
+            <h3>Response</h3>
+            <p>
+                <span class="key">status:</span>
+                <span class="value status"></span>
+            </p>
+            <p>
+                <span class="key">body:</span>
+                <pre class="value _body"></pre>
+            </p>
+        </section>
+    </div>
+</div>

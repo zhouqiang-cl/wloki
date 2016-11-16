@@ -1,0 +1,22 @@
+#%PAM-1.0
+#auth       include      system-auth
+auth     sufficient pam_permit.so
+#account    include      system-auth
+account    required     pam_python.so /home/work/pam_loki/pam_loki/pam_loki.py
+#password   include      system-auth
+#session    optional     pam_keyinit.so revoke
+session    required     pam_python.so /home/work/pam_loki/pam_loki/pam_loki.py
+#session    required     pam_limits.so
+
+
+
+#auth       required     pam_python.so /home/work/pam_loki/pam_loki/pam_loki.py
+#account    required     pam_python.so /home/work/pam_loki/pam_loki/pam_loki.py
+#password   required     pam_python.so /home/work/pam_loki/pam_loki/pam_loki.py
+#session    required     pam_python.so /home/work/pam_loki/pam_loki/pam_loki.py
+
+
+#auth     required pam_deny.so
+#account  required pam_deny.so
+#password required pam_deny.so
+#session  required pam_deny.so

@@ -1,0 +1,112 @@
+.jsform:after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    height: 1px;
+    clear: both;
+}
+
+.jsform .form-row {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.jsform .form-row > label {
+    text-align: right;
+    display: inline-block;
+    vertical-align: top;
+    width: 140px;
+    margin: 0 15px 0 0;
+    position: relative;
+    top: 7px;
+}
+.jsform.jsform-stacked .form-row > label {
+    text-align: left;
+    display: block;
+    margin: 0;
+    padding: 6px 0;
+    width: auto;
+    top: auto;
+}
+
+.jsform .form-row > label > blockquote {
+    margin: 3px 0 0 0;
+    padding: 5px 6px;
+    background: #FFF3DA;
+    border-left: 3px solid #F2B924;
+    font-size: .9em;
+    color: #777;
+}
+.jsform .form-row > label > blockquote:before {
+    content: "\6ce8\610f:";
+    margin-right: 4px;
+    color: #F48D19;
+}
+
+.jsform .form-row > input,
+.jsform .form-row > textarea {
+    display: inline-block;
+    width: calc(100% - 200px);
+}
+.jsform .form-row .input-group {
+    display: inline-block;
+    width: calc(100% - 155px);
+}
+.jsform .form-row > textarea {
+    height: 75px;
+}
+.jsform .form-row > input[type="checkbox"] {
+    cursor: pointer;
+}
+.jsform .form-row > input[type="checkbox"]:hover {
+    box-shadow: 0 0 4px #B0B0B0;
+    border-radius: 1px;
+}
+
+.jsform .form-row .input-group > div {
+    position: relative;
+    margin-top: 8px;
+}
+
+.jsform .form-row .input-group > div:first-child {
+    margin-top: 0;
+}
+
+.jsform .form-row .input-group input {
+    width: calc(100% - 45px);
+}
+.jsform .form-row .input-group > div.dict-item input {
+    width: calc(48% - 23px);
+}
+.jsform .form-row .input-group > div.dict-item input:first-child {
+    margin-right: 4%;
+}
+.jsform .form-row .input-group .fn-remove {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    display: none;
+}
+.jsform .form-row .input-group > div:hover .fn-remove,
+.jsform .form-row .input-group input:focus ~ .fn-remove {
+    display: block;
+}
+.jsform .form-row .fn-add {
+    display: block;
+    margin: 8px 0 5px 155px;
+    padding: 4px 10px 5px 10px;
+}
+.jsform .form-row .fn-add:after {
+    content: " new row";
+    font-weight: normal;
+}
+.jsform .form-row button {
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 2px;
+    background-color: #ddd;
+    border: 0;
+    padding: 2px 8px 3px 8px;
+}
+.jsform .form-row button:hover {
+}

@@ -1,0 +1,424 @@
+/* change on defaults */
+.panel > .title {
+    margin-bottom: 0;
+}
+
+/* new elements */
+
+.filter {
+    font-size: 13.2px;
+    line-height: 2em;
+    margin-bottom: 15px;
+    padding: 1.2em 1em 1em;
+}
+
+.filter .node-info .content {
+    display: inline-block;
+}
+
+.filter .label {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: .5em;
+    width: 4.5em;
+}
+
+.filter > div {
+    margin-bottom: 1em;
+}
+.filter > div:last-child {
+    margin-bottom: 0;
+}
+
+.node-info {
+    line-height: 1em;
+}
+
+.privilege-type {
+    position: relative;
+    display: inline-block;
+}
+
+.privilege-type select {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid #aaa;
+    background: rgba(250, 250, 250, 0.5);
+    border-radius: 2px;
+    padding: .3em .5em .3em 1em;
+    -webkit-appearance: none;
+    cursor: pointer;
+    outline: none;
+    width: 12em;
+    height: 2.1em;
+    transition: all .3s ease;
+    position: relative;
+    z-index: 2;
+    font-weight: bold;
+}
+.privilege-type:hover select {
+    background: #DFF2FF;
+    border: 1px solid #129FEA;
+}
+.privilege-type .arrow-down {
+    display: block;
+    position: absolute;
+    right: 5px; top: 0;
+    z-index: 1;
+}
+
+
+.privilege-items .content {
+    display: inline-block;
+}
+.privilege-items .content .item {
+    position: relative;
+    margin-right: 1em;
+}
+.privilege-items .content .item input {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    z-index: 1;
+}
+.privilege-items .content .item label {
+    position: relative;
+    display: block;
+    z-index: 0;
+    cursor: pointer;
+    border-radius: 2px;
+    border: 2px solid transparent;
+}
+.privilege-items .content .item label:hover {
+    border-color: #ddd;
+}
+.privilege-items .content .item label .cover {
+    position: absolute;
+    left: 0; top: 0; bottom: 0; right: 0;
+    z-index: 2;
+}
+.privilege-items .content .item label .name {
+    text-align: center;
+    padding: 2px 8px 0;
+    padding-left: 26px;
+    font-weight: bold;
+    background: #f1f1f1;
+}
+.privilege-items .content .item.no-status label .name {
+    border-color: #f1f1f1;
+}
+.privilege-items .content .item label .status {
+    padding-left: 5px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-right: 5px;
+    border-top-width: 2px;
+    border-top-style: solid;
+    text-align: center;
+}
+
+.privilege-items .content .items {
+    display: inline-block;
+}
+.privilege-items .content .fn-apply-modal {
+    display: inline-block;
+    height: 58px;
+    vertical-align: top;
+    margin-top: 2px;
+    margin-left: 1em;
+}
+.privilege-items .content .fn-apply-modal[disabled] {
+    background: #999;
+}
+
+.status-null {
+    background: #F1F1F1;
+    border-color: transparent;
+}
+.status-pending {
+    background: #F1F1F1;
+    border-color: #aaa;
+}
+.status-applying {
+    background: #E5F6FE;
+    color: #31708f;
+}
+.status-approved {
+    background: #dff0d8;
+    color: #3c763d;
+}
+.status-rejected {
+    background: #fcf8e3;
+    color: #8a6d3b;
+}
+.status-revoked {
+    background: #f2dede;
+    color: #a94442;
+}
+
+.privilege-items .content .item input:checked + label {
+    /* background: #E0E0E0; */
+    border-color: #2494F2;
+}
+/*
+.privilege-items .content > span {
+    border-radius: 2px;
+    background: #eee;
+    border-bottom: 2px solid #ccc;
+    display: inline-block;
+    line-height: 20px;
+    padding: 2px 6px 0;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 0.5em;
+}
+
+.privilege-items .content > span:hover {
+    border-color: #2494F2;
+}
+*/
+
+.node-info .path {
+    text-decoration: underline;
+    font-size: 1.1em;
+    font-family: 'Lucida Sans Typewriter', 'Lucida Console', monaco, 'Bitstream Vera Sans Mono', monospace;
+}
+
+
+.tab-content .title > b {
+    display: inline-block;
+    border-bottom: 1px dotted #aaa;
+    margin: 0 .3em;
+}
+
+
+.tab-content .panel {
+    position: relative;
+}
+.tab-content .panel .search-box {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
+.tab-content .panel .search-box > input {
+    width: 15em;
+}
+.tab-content .panel .token-action {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
+
+
+.privileges-table .dataTable tbody tr td {
+    position: relative;
+    padding-top: .8em;
+    padding-bottom: .8em;
+}
+.privileges-table.cozy-row .dataTable tbody tr td {
+    padding-top: 2.4em;
+}
+
+.privileges-table .dataTable td > .col-node_path {
+    padding: 3px 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    background: rgba(220, 220, 220, .5);
+    z-index: 1;
+    /*border-bottom: 1px solid rgba(180, 180, 180, .8);*/
+}
+
+.privileges-table .dataTable td > .col-privilege_type {
+    font-weight: bold;
+    color: #333;
+}
+
+
+.privileges-table .dataTable tr.row-today {
+    background: rgb(255, 242, 209);
+}
+.privileges-table .dataTable tr.row-yesterday {
+    background: #FFFAF2;
+}
+
+
+.privilege-row {
+    margin-top: -1em;
+}
+.privilege-row .item {
+    display: inline-block;
+    margin-right: 1.2em;
+    border: 1px solid rgba(230, 230, 230, .6);
+    box-shadow: 0 0 5px rgba(220,220,220, .6);
+    line-height: 1.5em;
+    margin-top: 1em;
+}
+.privilege-row .item > .name,
+.privilege-row .item > .status {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+.privilege-row .item > .name {
+    background: #fcfcfc;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.privilege-row .item > .status {
+    padding-top: 3px;
+    padding-bottom: 4px;
+    border-top-style: solid;
+    border-top-width: 2px;
+    font-size: 1em;
+    text-align: center;
+}
+
+
+.with-menu .privilege-row .item {
+    position: relative;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+.with-menu .privilege-row .item:hover,
+.with-menu .privilege-row .item.active {
+    border: 1px solid rgba(0, 123, 255, 0.82);
+    box-shadow: 0 0 6px rgba(118, 195, 255, 0.68);
+}
+
+.with-menu .privilege-row .item .menu {
+    position: absolute;
+    left: -1px;
+    top: calc(100% + 5px);
+    border: 1px solid #999;
+    z-index: 9;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(150, 150, 150, .8);
+
+    /* Compare to active */
+    display: none;
+}
+
+@keyframes fadeIn {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+    1% {
+        display: block;
+        opacity: 0;
+    }
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+.with-menu .privilege-row .item .menu.active {
+    display: block;
+    animation: fadeIn .3s ease;
+}
+
+.with-menu .privilege-row .item .menu > .subtitle {
+    background: #eee;
+    padding: .3em 0;
+    width: 8em;
+    text-align: center;
+    border-bottom: 1px solid #aaa;
+}
+.with-menu .privilege-row .item .menu > .action {
+    display: block;
+    padding: .3em .6em;
+    color: #9E9E9E;
+    pointer-events: none;
+}
+.with-menu .privilege-row .item .menu > .action:hover {
+    background: #f3f3f3;
+}
+
+.status-applying~.menu .action[data-action=approve],
+.status-applying~.menu .action[data-action=reject],
+.status-approved~.menu .action[data-action=revoke],
+.status-rejected~.menu .action[data-action=approve],
+.status-revoked~.menu .action[data-action=approve] {
+    color: #075CB9 !important;
+    pointer-events: auto !important;
+}
+
+
+.token-modal {
+
+}
+.token-modal input {
+    border-radius: 2px;
+    border: 1px solid #D6D6D6;
+    outline: none;
+    margin-right: .5em;
+}
+.token-modal input:focus {
+    border: 1px solid #2398FF;
+}
+.token-modal input.readonly {
+    pointer-events: none;
+}
+.token-modal .prefix {
+    width: 4em;
+    display: inline-block;
+}
+
+
+/* paginator.js */
+
+.the-paginator {
+    /*background: #f3f3f3;*/
+    display: flex;
+}
+/*
+.the-paginator:before, .the-paginator:after {
+    content: "";
+    display: table;
+}
+.the-paginator:after {
+    clear: both;
+}
+*/
+.the-paginator .info {
+   align-self: center;
+   flex-grow: 1;
+}
+.the-paginator ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-left: auto;
+    flex-wrap: wrap;
+    width: 60%;
+}
+.the-paginator ul > li {}
+.the-paginator ul > li > a {
+    display: inline-block;
+    padding: .6em 1.1em;
+    /*     background: #e5e5e5; */
+    /*     border-right: 1px solid #ccc; */
+    text-decoration: underline;
+    font-size: 1.1em;
+    width: 1em;
+    text-align: center;
+}
+.the-paginator ul > li > a:hover {
+    background: #f3f3f3;
+}
+.the-paginator ul > li.active > a,
+.the-paginator ul > li.active > a:hover {
+    background: #e5e5e5;
+}
+.the-paginator ul > li:last-child > a {
+    border: 0;
+}
+
+/* end paginator.js */
+
+.all-privileges-paginator {
+    margin-top: .8em;
+}

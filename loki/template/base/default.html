@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if settings['DEBUG'] %}
+      <title>[DEBUG] Loki Admin System</title>
+    {% else %}
+      <title>{{ title or 'Loki Admin System'}}</title>
+    {% endif %}
+    <link rel="shortcut icon"href="/static/img/favicon-1.ico">
+
+    <!-- build:css /static/css/base-default.css -->
+    <link rel="stylesheet" href="/static/css/lib/pure-min.css">
+    <link rel="stylesheet" href="/static/css/pure-tunes.css">
+    <link rel="stylesheet" href="/static/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/lib/jstree.css">
+    <link rel="stylesheet" href="/static/css/lib/humane.jackedup.css">
+    <link rel="stylesheet" href="/static/css/lib/jquery.modal.css" media="all">
+
+    <link rel="stylesheet" href="/static/css/alfred.css">
+
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/base-default.css">
+    <!-- endbuild -->
+    {% block css %}
+    {% endblock %}
+</head>
+<body class="">
+
+    {% include 'includes/header.html' %}
+
+    <div class="body-container">
+
+        <div id="sidebar">
+            {% block sidebar %}
+                <div class="selected-node">
+                    <div class="cube"><i class="fa fa-star"></i></div>
+                    <div class="info">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span>?</span>
+                    </div>
+                </div>
+                <div class="content">
+                    <div id="ptree" style="display: none;">
+                    </div>
+
+                    <div id="domains" style="display: none;">
+                        <div class="title">所有域名</div>
+                        <ul class="items ui-itemlist">
+                        </ul>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="pure-button fn-search"><i class="fa fa-search"></i></button>
+                    <!-- <input class="search" type="text" placeholder="搜索节点"> -->
+                    <!-- <div class="fn-clear-search" style="display: none;"><i class="fa fa-times"></i></div> -->
+                    <button class="pure-button fn-collapse"><i class="fa fa-angle-left"></i></button>
+                </div>
+            {% endblock %}
+        </div>
+
+        <div id="main">
+            {% block main %}
+            {% endblock %}
+
+        </div>
+    </div>
+
+    <div class="alfred">
+        <input type="text" placeholder="Search node path">
+        <div class="loading">Loading..</div>
+        <i class="cancel">×</i>
+        <div class="hint">
+            搜索呼出快捷键: <code>⌘ + /</code>, <code>^ + /</code>; 关闭快捷键: <code>esc</code>
+        </div>
+    </div>
+
+
+    {% include 'includes/ajax-error-modal.html' %}
+
+    <!-- build:js /static/js/require-with-config.js -->
+    <script src="/static/js/require-config.js"></script>
+    <script src="/static/js/lib/require.js"></script>
+    <!-- endbuild -->
+
+    {% block scripts %}
+    {% endblock %}
+
+</body>
+</html>

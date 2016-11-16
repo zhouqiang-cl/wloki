@@ -1,0 +1,549 @@
+/* layout */
+/* layout is the essential css to show the big picture of the layout,
+ * it includes details of the elements, not just positions or distances.
+ */
+
+
+
+#sidebar {
+    position: fixed;
+    left: 0; bottom: 0;
+    top: 40px;
+    width: 230px;
+    z-index: 8;
+
+    background-color: #fff;
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+    -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+    /* box-shadow: 0 0 10px 0 rgba(0,0,0,.2); */
+}
+
+#main {
+    margin-left: 230px;
+    margin-top: 40px;
+    position: relative;
+    height: 100%;
+}
+
+/* detail */
+
+
+
+
+.ui-itemlist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.ui-itemlist > li {
+    border-bottom: 1px solid #eee;
+    position: relative;
+    transition: all 0.2s ease;
+}
+.ui-itemlist > li > i {
+    opacity: 0;
+    position: absolute;
+    left: 12px; top: 9px;
+    transition: all 0.2s ease;
+    font-size: 13px;
+    z-index: 1;
+}
+.ui-itemlist > li > a {
+    display: block;
+    position: relative;
+    padding: 8px 12px;
+    transition: all 0.2s ease;
+    font-size: 13px;
+    color: #2083D6;
+}
+
+
+.ui-itemlist > li:hover {
+    background: #fafafa;
+}
+.ui-itemlist > li.selected {
+    background: #eee;
+}
+.ui-itemlist > li.selected:hover {
+    background: #f4f4f4;
+}
+.ui-itemlist > li:hover > a,
+.ui-itemlist > li.selected > a {
+    margin-left: 12px;
+}
+.ui-itemlist > li:hover > i,
+.ui-itemlist > li.selected > i {
+    opacity: 1;
+}
+
+
+.sidebar-cover {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 46px;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 11;
+}
+.sidebar-cover:hover {
+    background: rgba(220, 220, 220, 0.5);
+}
+.sidebar-cover:hover::before {
+    width: 100%;
+    text-align: center;
+    content: "Disabled";
+    color: #888;
+    position: absolute;
+    top: 45%;
+}
+
+
+#sidebar .title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    font-size: 13px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    background: #DFF2FF;
+}
+
+#sidebar .items {
+    margin: 0;
+    list-style: none;
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    top: 36px;
+    overflow-y: auto;
+}
+
+#sidebar > .selected-node {
+    display: none;
+}
+#sidebar > .selected-node > .info{
+    display: none;
+}
+#sidebar > .tabs {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 35px;
+    border-top: 1px solid #ddd;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+}
+#sidebar > .tabs > li {
+    display: inline-block;
+}
+#sidebar > .tabs > li > a {
+    display: inline-block;
+    padding: 10px;
+    width: 60px;
+    font-size: 13px;
+    text-align: center;
+    border-right: 1px solid #ddd;
+    position: relative;
+    top: -1px;
+}
+#sidebar > .tabs > li.active > a {
+    background: #fff;
+}
+
+#sidebar > .content {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    bottom: 46px;
+    overflow-y: auto;
+}
+
+#sidebar > .actions {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 30px;
+    padding: 8px;
+    background: #f0f0f0;
+}
+#sidebar > .actions > button {
+    width: 34px;
+    height: 30px;
+    padding: 0;
+}
+#sidebar > .actions > .search {
+    display: inline-block;
+    border: 0;
+    background: #fff;
+    border-radius: 3px;
+    padding: 5px 6px;
+    height: 22px;
+    outline: none;
+    width: 157px;
+    margin-right: 6px;
+    box-shadow: inset 0px 0px 2px 0px rgba(80, 80, 80, 0.5);
+    color: #333;
+    position: relative;
+    top: -1px;
+}
+
+#sidebar > .actions > .fn-clear-search {
+    position: absolute;
+    top: 15px;
+    right: 65px;
+    font-weight: 100;
+    color: #888;
+    cursor: pointer;
+}
+#sidebar > .actions > .fn-collapse {
+    float: right;
+    background-image: linear-gradient(transparent,rgba(0,0,0,.08) 40%,rgba(0,0,0,.1));
+}
+#sidebar > .actions > .fn-collapse:hover {
+    background-image: linear-gradient(rgba(0,0,0,.01),rgba(0,0,0,.14) 40%,rgba(0,0,0,.16));
+}
+
+body.sidebar-collapsed #sidebar {
+    width: 50px;
+    background: #fff;
+}
+body.sidebar-collapsed #main {
+    margin-left: 50px;
+}
+body.sidebar-collapsed #sidebar .content {
+    display: none;
+}
+body.sidebar-collapsed #sidebar .actions .search {
+    display: none;
+}
+body.sidebar-collapsed #sidebar > .selected-node {
+    display: block;
+    position: relative;
+}
+body.sidebar-collapsed #sidebar > .selected-node > .cube {
+    width: 50px;
+    background: #eee;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    font-size: 15px;
+    color: #2494F2;
+    cursor: pointer;
+}
+body.sidebar-collapsed #sidebar > .selected-node:hover > .info {
+    display: block;
+    position: absolute;
+    left: 50px; top: 0;
+    padding-left: 10px;
+    width: 169px;
+    height: 45px;
+    line-height: 45px;
+    background: #fff;
+    border-right: 1px solid #2494F2;
+    border-bottom: 1px solid #2494F2;
+    font-size: 13px;
+}
+body.sidebar-collapsed #sidebar > .selected-node:hover > .cube {
+    border-bottom: 1px solid #2494F2;
+}
+
+body.no-sidebar {
+}
+
+#ptree {
+    color: #333;
+    font-size: 12px;
+    padding-top: 15px;
+}
+#ptree .fa {
+    color: #444;
+}
+
+#domains {
+    font-size: 14px;
+    position: relative;
+    height: 100%;
+}
+
+
+
+/*
+#main > .head {
+    background: #fff;
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+}
+#main > .head h1 {
+    margin: 5px 0;
+}
+*/
+
+#main > .container {
+    /*padding: 15px;*/
+    padding: 20px 20px;
+}
+
+
+.tabs-nav {
+    border-bottom: 1px solid #ddd;
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0;
+}
+.tabs-nav > li {
+    float: left;
+    margin-bottom: -1px;
+    position: relative;
+    padding: 0 5px;
+}
+.tabs-nav > li:first-child {
+    margin-left: 8px;
+}
+.tabs-nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    margin-right: 2px;
+    line-height: 1.42857;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    color: #555;
+    outline: none;
+    font-size: 13px;
+}
+.tabs-nav > li > a:hover {
+    border-color: #eee #eee #ddd;
+    text-decoration: none;
+    background-color: #eee;
+}
+
+.tabs-nav > li.active > a {
+    color: #333;
+    border: 1px solid #ddd;
+    /*border-bottom-color: transparent;*/
+    border-bottom-color: #F9F9F9;
+    cursor: default;
+    background-image: linear-gradient(to bottom, #ffffff 0%, #f9f9f9 100%)
+}
+.tabs-nav > li.disabled > a {
+    color: #999;
+    text-decoration: line-through;
+
+}
+.tabs-nav > li.active.disabled > a {
+    background-image: linear-gradient(to bottom, #FFF0C9 0%, #f9f9f9 100%);
+}
+.tabs > div {
+    padding-top: 20px;
+    position: relative;
+}
+.tabs > div > .cover {
+    position: absolute;
+    background: #f9f9f9;
+    left: -5px;
+    right: -5px;
+    top: 0;
+    bottom: 0;
+    letter-spacing: 0px;
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 200px;
+    font-size: 3em;
+    color: #EFB70C;
+    text-decoration: overline;
+    z-index: 999;
+}
+
+.tab-content {
+    display: none;
+}
+
+/* alfred search bar/panel */
+
+.alfred {
+    display: none;
+    position: fixed;
+    left: 230px; right: 0; top: 40px; bottom: 0;
+    z-index: 7;
+    background: #fff;
+    padding: 25px;
+}
+
+.alfred .dropdown-node-id {
+    display: inline-block;
+    float: right;
+    color: #555;
+    font-size: .8em;
+    line-height: 1.5em;
+}
+
+
+/* DataTables */
+table tbody td.dataTables_empty {
+    height: 30px;
+    line-height: 30px;
+}
+
+/* extra styles */
+
+.fixed-table-container {
+    height: 252px;
+    border: 1px solid #d0d0d0;
+    margin: 15px auto;
+    background-color: white;
+    /* above is decorative or flexible */
+    position: relative; /* could be absolute or relative */
+    padding-top: 35px; /* height of header */
+    overflow-y: auto;
+}
+
+.fixed-table-container-inner {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.fixed-table-container .header-background {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    height: 35px; /* height of header */
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    /*box-shadow: 0 1px 0 rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);*/
+}
+
+.fixed-table-container table {
+    background-color: white;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.fixed-table-container th {
+    padding: 0 5px;
+    text-align: left;
+    height: 0;
+}
+
+.fixed-table-container .th-inner {
+    position: absolute;
+    top: 0;
+    line-height: 30px; /* height of header */
+    text-align: left;
+    padding-left: 5px;
+    margin-left: -5px;
+}
+
+.fixed-table-container td {
+  border-bottom: 1px solid #ccc;
+  padding: 8px 6px;
+  text-align: left; /* IE */
+}
+.fixed-table-container th {
+  padding: 0 5px;
+  text-align: left; /* IE */
+}
+
+/* spinner */
+.spinner {
+    display: inline-block;
+    width: 70px;
+    text-align: center;
+}
+
+.spinner > div {
+    width: 8px;
+    height: 8px;
+    margin-right: 2px;
+    background-color: #333;
+
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: bouncedelay 1.4s infinite ease-in-out both;
+    animation: bouncedelay 1.4s infinite ease-in-out both;
+}
+.spinner > div:last-child {
+    margin-right: 0;
+}
+
+.spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+@-webkit-keyframes bouncedelay {
+    0%, 80%, 100% { -webkit-transform: scale(0.0) }
+    40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes bouncedelay {
+    0%, 80%, 100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+    } 40% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
+}
+
+.user-action {
+    font-size: 14px;
+    float: right;
+}
+
+.opacity9 {
+    opacity: 0.9;
+}
+
+.opacity8 {
+    opacity: 0.8;
+}
+
+.opacity7 {
+    opacity: 0.7;
+}
+
+.opacity6 {
+    opacity: 0.6;
+}
+
+.opacity5 {
+    opacity: 0.5;
+}
+
+
+.note {
+    background-color: #f4f8fa;
+    border-left: 3px solid #eee;
+    border-color: #5bc0de;
+    margin: 15px 0;
+    padding: 15px;
+}
+.note-red {
+    background-color: #fdf7f7;
+    border-color: #d9534f;
+}
+
+
+
+/* Highcharts */
+
+.highcharts-container {
+    overflow: visible !important;
+}
+.highcharts-tooltip > span {
+    background: rgba(240, 240, 240, .9);
+    border: 1px solid #999;
+    padding: 8px;
+}
+.highcharts-tooltip > span .title {
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-family: Courier New;
+    font-weight: bold;
+}

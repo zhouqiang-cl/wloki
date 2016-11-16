@@ -1,0 +1,183 @@
+{% extends 'base/default.html' %}
+
+
+{% block css %}
+<!-- build:css /static/css/job.css -->
+<link rel="stylesheet" href="/static/css/lib/jquery.dataTables.css" media="all">
+<link rel="stylesheet" href="/static/css/lib/selectize.css">
+<link rel="stylesheet" href="/static/css/job.css" media="all">
+<link rel="stylesheet" href="/static/css/jsform.css" media="all">
+<!-- endbuild -->
+{% endblock %}
+
+
+{% block main %}
+
+<div class="container">
+
+    <div class="tabs">
+        <ul class="tabs-nav clearfix">
+            <li><a alt="#tab-1" href="?tab=1">模板配置</a></li>
+            <li><a alt="#tab-2" href="?tab=2">任务发布</a></li>
+            <li><a alt="#tab-3" href="?tab=3">控制台</a></li>
+        </ul>
+
+        <div id="tab-1" class="pure-g tab-content">
+            <div class="pure-u-2-5">
+                <div class="template-config panel panel-left">
+
+                    <div class="actions">
+
+                        <input class="fn-search pure-input" type="text">
+
+                        <button class="pure-button pure-button-primary fn-create-template" disabled>创建</button>
+                    </div>
+
+                    <table id="template-table" class="display" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                        </tr>
+                        </thead>
+
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="pure-u-3-5">
+                <div class="template-detail panel" style="display: none;">
+                    <div class="title for-create">新建配置</div>
+                    <div class="title for-update">更新配置</div>
+
+                    <form class="pure-form template-detail-form for-update">
+                        <div class="content">
+                        </div>
+
+                        <div class="actions">
+                            <button type="submit" id="update-b" class="pure-button button-orange">更新</button>
+                            <button type="button" id="delete-b" class="pure-button button-red">删除</button>
+                            <button type="button" id="copy-b" class="pure-button button-blue">复制</button>
+                        </div>
+                    </form>
+                    <form class="pure-form template-create-form for-create">
+                        <!--<div class="form-row" data-key="template-type" data-type="select">-->
+                        <div class="template-type-div">
+                            <label>模板类型</label><!--
+                            --><select class="template-type"></select>
+                        </div>
+                        <div class="content">
+                        </div>
+                        <div class="actions">
+                            <button type="submit" class="pure-button button-orange">提交</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="tab-2" class="pure-g tab-content">
+            <div class="pure-u-2-5">
+                <div class="template-deployment panel panel-left">
+
+                    <div class="actions">
+
+                        <input class="fn-search pure-input" type="text">
+
+                        <!--<button class="pure-button pure-button-primary">创建</button>-->
+                    </div>
+
+                    <table id="deployment-table" class="display" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>类型</th>
+                            <!-- <th>策略数量</th> -->
+                        </tr>
+                        </thead>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="pure-u-3-5">
+                <div class="detail deployment-detail panel" style="display: none;">
+                    <div class="title">发布配置</div>
+
+                    <form class="pure-form deployment-detail-form">
+                        <div class="content">
+                        </div>
+
+                        <div class="actions">
+                            <button class="pure-button button-orange">确认发布</button>
+                            <a style="right:0;" target="_blank" href="http://deploy.nosa.me">修改打包配置文件</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="tab-3" class="pure-g tab-content">
+            <div class="pure-u-2-5">
+                <div class="console panel panel-left">
+
+                    <div class="actions">
+
+                        <input class="fn-search pure-input" type="text" style="width:100%;" />
+
+                        <!--button class="pure-button pure-button-primary fn-create-group">创建</button-->
+                    </div>
+
+                    <table id="console-table" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>任务名称</th>
+                                <th>发布日期</th>
+                                <th>状态</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="pure-u-3-5">
+                <div class="console-detail panel" style="display: none;">
+                    <div class="title for-create">控制台
+                        <div class="job-status float-right">
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <div class="job-parameters pure-form">
+                        </div>
+                        <br />
+                        <div class="job-actions pure-form">
+                            <button class="pure-button fn-pause"><i class="fa fa-pause"></i></button>
+                            <button class="pure-button fn-play"><i class="fa fa-play"></i></button>
+                            <button class="pure-button fn-stop"><i class="fa fa-stop"></i></button>
+                            <button class="pure-button fn-trash"><i class="fa fa-trash"></i></button>
+                        </div>
+
+                        <div class="job-status-count">
+                        </div>
+
+                        <div class="job-servers">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<!-- build:js /static/js/job.js -->
+<script src="/static/js/job.js"></script>
+<!-- endbuild -->
+{% endblock %}

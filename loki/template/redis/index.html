@@ -1,0 +1,256 @@
+{% extends 'base/default.html' %}
+
+{% block css %}
+<!--build:css /static/css/redis.css-->
+<link rel="stylesheet" href="/static/css/lib/jquery.dataTables.css" media="all">
+<link rel="stylesheet" href="/static/css/redis.css" media="all">
+<!--endbuild-->
+{% endblock %}
+
+{% block sidebar %}
+<div class="content">
+</div>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+        <div class="container-main" style="display: none;">
+            <div class="main-search">
+                <form>
+                    <input type="text" name="s"></input>
+                    <button>Search</button>
+                </form>
+            </div>
+            <div class="search-result">
+                <h2>Result in codis info</h2>
+                <table class="server-table-codis display">
+                    <thead>
+                        <tr>
+                        <th>name</th>
+                        <th>zk</th>
+                        <th>dashboard</th>
+                        <th>proxy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <h2>Result in redis info</h2>
+                <table class="server-table-redis display">
+                    <thead>
+                        <tr>
+                        <th>host</th>
+                        <th>port</th>
+                        <th>status</th>
+                        <th>master_host</th>
+                        <th>master_port</th>
+                        <th>cluster</th>
+                        <th>used_memory</th>
+                        <th>conf_maxmemory</th>
+                        <th>conf_dir</th>
+                        <th>conf_dbfilename</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="main-button">
+                <button class="pure-button manage-redis">
+                    <i class="fa fa-plus"></i>
+                    Add Redis
+                </button>
+                <button class="pure-button manage-codis">
+                    <i class="fa fa-plus"></i>
+                    Add Codis
+                </button>
+            </div>
+        </div>
+        <div class="container-detail" style="display: none;">
+            <div class="pure-g">
+                <div class = "pure-u-1-2">
+                    <div id="overview" class="panel" style="margin-right:5px;">
+                        <div class="title">Overview</div>
+                        <dl class="content">
+                            <dt>Name</dt><dd>NA</dd>
+                            <dt>ZK</dt><dd>NA</dd>
+                            <dt>Memory</dt><dd>NA</dd>
+                            <dt>Keys</dt><dd>NA</dd>
+                            <dt>QPS</dt><dd>NA</dd>
+                            <dt>Dashboard</dt><dd>NA</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class ="pure-u-1-2">
+                    <div id = "overviewChart" class ="panel">
+                        <div class="title">QPS</div>
+                        <div class="content" style="height:144px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div id ="proxyView" class="panel">
+                <div class="title">Proxy<div class="action-button">
+                    <button class="button-fix pure-button button-refresh">
+                        <i class="fa fa-refresh"></i>
+                    </button>
+                </div></div>
+                <div class="content">proxy table</div>
+            </div>
+            <div id = "slotView" class="panel">
+                <div class="title">Slots<div class="action-button">
+                        <button class="button-auto pure-button fn-set-slot">
+                            <i class="fa fa-th">Set Slot</i>
+                        </button>
+                        <button class="button-auto pure-button fn-migrate-slot">
+                            <i class="fa fa-plane">Migrate Slot</i>
+                        </button>
+                        <button class="button-fix pure-button button-refresh">
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                </div></div>
+                <div class="content" style="height: 200px; width:100%;"></div>
+                <div class="content"></div>
+            </div>
+            <div id = "groupView" class="panel">
+                <div class="title">Groups<div class="action-button">
+                        <button class="button-auto pure-button fn-add-group"><i class="fa fa-plus">Add Group</i></button>
+                        <button class="button-fix pure-button button-refresh"><i class="fa fa-refresh"></i></button>
+                    </div>
+                </div>    
+                <div class="content" style="min-height:70px;"></div>
+            </div>
+        </div>
+</div>
+<div class="container-modal">
+    <div class="codis-modal">
+    <div class="modal fade set-slot-modal" style="display: none;">
+        <form class="set-slot-form pure-form pure-form-aligned">
+            <div class="header">指定slot分组</div>
+            <div class="body">
+                <div class="pure-control-group">
+                    <label for="from-id">Slot From</label>
+                    <input id="from-id" type="text">
+                </div>
+                <div class="pure-control-group">
+                    <label for="to-id">Slot To</label>
+                    <input id="to-id" type="text">
+                </div>
+                <div class="pure-control-group">
+                    <label for="group-id">Target Group id</label>
+                    <input id="group-id" type="text">
+                </div>
+            </div>
+            <div class="footer"><div>
+                <button type="submit" class="pure-button pure-button-primary">确定</button>
+            </div></div>
+        </form>
+    </div>
+    <div class="modal fade migrate-slot-modal" style="display: none;">
+        <form class="migrate-slot-form pure-form pure-form-aligned">
+            <div class="header">迁移slot</div>
+            <div class="body">
+                <div class="pure-control-group">
+                    <label for="from-id">Slot From</label>
+                    <input id="from-id" type="text">
+                </div>
+                <div class="pure-control-group">
+                    <label for="to-id">Slot To</label>
+                    <input id="to-id" type="text">
+                </div>
+                <div class="pure-control-group">
+                    <label for="group-id">Migrate To (group id)</label>
+                    <input id="group-id" type="text">
+                </div>
+                <div class="pure-control-group">
+                    <label for="delay">Migrate Delay (ms)</label>
+                    <input id="delay" type="text">
+                </div>
+            </div>
+            <div class="footer"><div>
+                <button type="submit" class="pure-button pure-button-primary">确定</button>
+            </div></div>
+        </form>
+    </div>
+    <div class="modal fade add-group-modal" style="display: none;">
+        <form class="add-group-form pure-form pure-form-aligned">
+            <div class="header">增加group</div>
+            <div class="body">
+                <div class="pure-control-group">
+                    <label for="group-id">Group Id</label>
+                    <input id="group-id" type="text">
+                </div>
+            </div>
+            <div class="footer"><div>
+                <button type="submit" class="pure-button pure-button-primary">确定</button>
+            </div></div>
+        </form>
+    </div>
+    <div class="modal fade add-redis-modal" style="display: none;">
+        <form class="add-redis-form pure-form pure-form-aligned">
+            <div class="header">为group增加redis</div>
+            <div class="body">
+                <div class="pure-control-group">
+                    <label for="group-id">Group Id</label>
+                    <input style="width:200px;" id="group-id" type="text" readonly value="group id">
+                </div>
+                <div class="pure-control-group">
+                    <label for="redis-addr">Redis Addr</label>
+                    <input style="width:200px;" id="redis-addr" type="text">
+                </div>
+            </div>
+            <div class="footer"><div>
+                <button type="submit" class="pure-button pure-button-primary">确定</button>
+            </div></div>
+        </form>
+    </div>
+    </div>
+    <div class="manage-modal">
+    <div class="modal fade manage-redis-modal" style="display: none;">
+        <form class="manage-redis-form pure-form pure-form-aligned">
+            <div class="header">更新 Redis 信息</div>
+            <div class="body">
+                <div class="pure-control-group">
+                    <label for="redis-host">Host</label>
+                    <input style="width:200px;" id="redis-host" type="text">
+                </div>
+                <div class="pure-control-group">
+                    <label for="redis-port">Port</label>
+                    <input style="width:200px;" id="redis-port" type="text">
+                </div>
+                <div class="pure-control-group">
+                    <label for="redis-status">Status</label>
+                    <input style="width:200px;" id="redis-status" type="text" value="online">
+                </div>
+            </div>
+            <div class="footer"><div>
+                <button type="submit" class="pure-button pure-button-primary">确定</button>
+            </div></div>
+        </form>
+    </div>
+    <div class="modal fade manage-codis-modal" style="display: none;">
+        <form class="manage-codis-form pure-form pure-form-aligned">
+            <div class="header">更新 Codis 信息</div>
+            <div class="body">
+                <div class="pure-control-group">
+                    <label for="codis-name">Product Name</label>
+                    <input style="width:200px;" id="codis-name" type="text">
+                </div>
+                <div class="pure-control-group">
+                    <label for="codis-zk">ZK Cluster</label>
+                    <input style="width:200px;" id="codis-zk" type="text">
+                </div>
+            </div>
+            <div class="footer"><div>
+                <button type="submit" class="pure-button pure-button-primary">确定</button>
+            </div></div>
+        </form>
+    </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/redis.js -->
+<script src="/static/js/redis.js"></script>
+<!-- endbuild -->
+{% endblock %}

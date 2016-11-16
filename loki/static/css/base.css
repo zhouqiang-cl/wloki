@@ -1,0 +1,259 @@
+/* General elements & header */
+
+html, body,
+button, input, select, textarea {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+    background: #f7f7f7;
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+    color: #428bca;
+}
+
+dl {
+    margin: 0;
+}
+dt {
+    float: left;
+    clear: left;
+    width: 80px;
+    text-align: right;
+    font-weight: bold;
+    color: #666;
+    word-wrap: break-word;
+    line-height: 1em;
+}
+dt:after {
+    content: ":";
+}
+dd {
+    margin-left: 100px;
+    padding-bottom: 8px;
+}
+
+input[type=checkbox]:disabled {
+    background: rgba(160, 160, 160, .5);
+    -webkit-appearance: none;
+    width: .9em;
+    border-radius: 2px;
+    height: .9em;
+}
+
+header {
+    position: fixed;
+    left: 0; top: 0; right: 0;
+    z-index: 9;
+    -webkit-box-shadow: 0 0 5px 0 rgba(10,10,10,.2);
+    /* box-shadow: 0 0 10px 0 rgba(0,0,0,.2); */
+    /*background-image: linear-gradient(to bottom, #FCFCFC 0%, #FFFFFF 100%);*/
+    background-color: #fff;
+}
+
+header nav #logo {
+    width: 230px;
+    display: inline-block;
+    text-align: center;
+    background: #2494F2;
+    color: #fff;
+    height: 24px;
+    line-height: 24px;
+    padding: 8px 0;
+    border: 0;
+    font-size: 18px;
+    font-family: Optima, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+header nav ul {
+    margin: 0;
+    padding: 0;
+}
+header nav li.selected > a {
+    background: #eee;
+}
+header nav li a {
+    color: #777;
+    font-size: 13px;
+    height: 24px;
+    line-height: 24px;
+    display: inline-block;
+    padding: 8px 20px;
+    background: #fff;
+}
+header nav li a,
+header nav li a:focus,
+header nav li a:active {
+    outline: 0;
+}
+header nav li a .fa-caret-down {
+    position: relative;
+    top: 2px;
+    right: -8px;
+    font-size: 18px;
+    color: #2494F2;
+    width: 10px;
+}
+header nav li a:hover {
+    background: #f5f5f5;
+}
+header nav li a i.fa {
+    margin-right: 2px;
+}
+header nav > #logo,
+header nav > ul {
+    display: block;
+    float: left;
+}
+header nav > ul > li {
+    float: left;
+    /*overflow: hidden;*/
+    height: 40px;
+    position: relative;
+}
+header nav > ul > li > ul {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 1;
+    width: auto;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,.2);
+}
+header nav > ul > li:hover > ul {
+    display: block;
+}
+header nav > ul > li > ul > li > a {
+    width: 80px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+header .user-menu {
+    float: right;
+    position: static;
+}
+
+
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+
+.disable-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.panel {
+    padding: 12px;
+    /*font-size: 14px;*/
+    /*box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.13);*/
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.13);
+    border: 0;
+    margin-bottom: 25px;
+    background: #FFF;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.panel-left {
+    margin-right: 20px;
+}
+
+.panel > .title {
+    padding-bottom: 12px;
+    margin: 0 0 20px;
+    padding-top: 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+}
+
+
+.timepicker-widget {
+    font-size: 12px;
+    position: fixed;
+    right: 0;
+    padding-top: 20px;
+    padding: 16px 8px 7px;
+    top: 32px;
+    z-index: 8;
+    background: #fbfbfb;
+}
+
+.timepicker-widget > input {
+    padding: 5px 7px;
+    border: 1px solid #ddd;
+}
+
+.timepicker-widget > input:focus {
+    background-color: #DFF2FF;
+}
+
+.timepicker-widget .pure-button {
+    font-size: 12px;
+    margin-left: 15px;
+}
+
+.overlay-loader {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    z-index: 99;
+}
+
+.overlay-loader {
+  background-color: #333;
+  border-radius: 100%;
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+
+.dataTables_wrapper.-disabled {
+    pointer-events: none;
+}
+.dataTables_wrapper.-disabled:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(250, 250, 250,.6);
+    z-index: 19;
+}
+.dataTables_wrapper .dataTables_processing {
+    z-index: 20;
+}

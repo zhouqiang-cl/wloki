@@ -1,0 +1,32 @@
+
+
+.repl-spider .fn-search {
+    margin-bottom: 15px;
+}
+
+.diagram {
+    min-height: 500px;
+    border: 1px dashed #ccc;
+}
+
+
+/* tab 2 */
+
+.servers table > thead > tr > th:nth-child(1),
+.servers table > tbody > tr > td:nth-child(1) {
+    width: 44px;
+    padding: 0;
+}
+.servers table > thead > tr > th:nth-child(1) label,
+.servers table > tbody > tr > td:nth-child(1) label {
+    padding: 8px 20px 8px 15px;
+    cursor: pointer;
+}
+
+.servers {
+    margin-right: 15px;
+    font-size: 13px;
+}
+.servers .fn-search {
+    width: 100%;
+}

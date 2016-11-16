@@ -1,0 +1,91 @@
+{% extends 'base/default.html' %}
+
+
+{% block css %}
+<!-- build:css /static/css/monitor_relatives.css -->
+<link rel="stylesheet" href="/static/css/lib/jquery.dataTables.css" media="all">
+<link rel="stylesheet" href="/static/css/monitor_relatives.css" media="all">
+<!-- endbuild -->
+{% endblock %}
+
+
+{% block main %}
+
+<div class="container">
+
+    <div class="tabs">
+        <ul class="tabs-nav clearfix">
+            <li><a alt="#tab-1" href="?tab=1">模板继承</a></li>
+        </ul>
+
+        <div id="tab-1" class="pure-g tab-content">
+            <div class="pure-u-5-12">
+                <div class="node-templates templates panel">
+                    <div class="title">当前继承模板</div>
+
+                    <div class="search">
+                        <input class="fn-search pure-input" type="text">
+                    </div>
+
+                    <table class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>模板名称</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="template-buttons pure-u-1-6">
+                <div class="content">
+                    <button class="pure-button fn-add-templates" disabled>继承 <i class="fa fa-angle-double-left"></i></button>
+                    <button class="pure-button fn-remove-templates" disabled>删除继承 <i class="fa fa-angle-double-right"></i></button>
+                </div>
+            </div>
+
+            <div class="pure-u-5-12">
+                <div class="free-templates templates panel">
+                    <div class="title">可继承模板</div>
+
+                    <div class="search">
+                        <input class="fn-search pure-input" type="text">
+                    </div>
+
+                    <table class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>模板名称</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="template-extra-buttons">
+                    <button class="pure-button fn-show-paste-modal"><i class="fa fa-clipboard"></i>使用文本继承</button>
+                </div>
+            </div>
+
+            <div class="pure-u-1">
+                <div class="modal fade paste-modal" style="display: none;">
+                    <div class="header">文本继承模板</div>
+                    <div class="body">
+                        <textarea class="pure-input" placeholder="粘贴模板名称，换行分隔"></textarea>
+                    </div>
+                    <div class="footer">
+                        <button class="pure-button pure-button-primary fn-paste-servers">提交</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/monitor_relatives.js -->
+<script src="/static/js/monitor_relatives.js"></script>
+<!-- endbuild -->
+{% endblock %}

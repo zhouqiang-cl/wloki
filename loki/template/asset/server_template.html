@@ -1,0 +1,80 @@
+
+{% raw %}
+<script type="text/template" id="server-detail-template">
+    <h2>Basic Info</h2>
+    <dl>
+        <dt>Hostname</dt>
+        <dd>
+            <a href="/asset/sn:{{ basic.sn }}" target="_blank" class="item">{{ basic.hostname }}</a>
+        </dd>
+        <dt>SN</dt>
+        <dd>{{ basic.sn }}</dd>
+        <dt>Type</dt>
+        <dd>{{ basic.type }}</dd>
+    </dl>
+
+    <h2>Node Info</h2>
+    <div class="node-info">
+    {{#if nodes}}
+        <ul>
+            {{#nodes}}
+            <li>{{id}} <a target="_blank" href="/nodes?nid={{id}}">{{path}}</a>
+            </li>
+            {{/nodes}}
+        </ul>
+    {{else}}
+        <blockquote>本机当前不属于任何节点</blockquote>
+    {{/if}}
+    </div>
+
+    <h2>VM Info</h2>
+    <div class="vm-info">
+    {{#ifeq basic.type 'vm'}}
+        <blockquote>本机为虚拟机，宿主机信息及关系如下</blockquote>
+        <dl>
+            <dt>宿主机</dt>
+            <dd>
+                <a href="/asset/sn:{{ others.vm_host.sn }}" target="_blank" class="item">{{ others.vm_host.hostname }}</a>
+            </dd>
+            <dt>虚拟机编号</dt>
+            <dd>{{ others.vm_name }}</dd>
+        </dl>
+    {{else}}
+        {{#ifeq basic.type 'kvm'}}
+            <blockquote>本机为宿主机，所寄宿的 {{others.vms.length}} 台虚拟机如下</blockquote>
+            <div class="vms">
+                {{#others.vms}}
+                    <a href="/asset/sn:{{ sn }}" target="_blank" class="item">{{ hostname }}</a>
+                {{/others.vms}}
+                {{#if others.vms}}
+                {{else}}
+                    <div class="wtf">没有机器，WTF??!</div>
+                {{/if}}
+            </div>
+        {{else}}
+            <blockquote>本机为物理机，无 VM 信息</blockquote>
+        {{/ifeq}}
+    {{/ifeq}}
+    </div>
+
+    <h2>Extended Info</h2>
+    <dl>
+        {{#extended}}
+        <dt>{{{label key}}}</dt>
+        <dd>{{#in_column}}{{value}}{{/in_column}}</dd>
+        {{/extended}}
+    </dl>
+
+    {{#if hidden.length}}
+    <div class="show-hidden-wrapper">
+        <a href="#">Show hidden</a>
+    </div>
+    <dl class="hidden">
+        {{#hidden}}
+        <dt>{{key}}</dt>
+        <dd>{{#in_column}}{{value}}{{/in_column}}</dd>
+        {{/hidden}}
+    </dl>
+    {{/if}}
+</script>
+{% endraw %}

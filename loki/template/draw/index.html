@@ -1,0 +1,92 @@
+{% extends 'base/default.html' %}
+
+
+{% block css %}
+<!-- build:css /static/css/draw.css -->
+<link rel="stylesheet" href="/static/css/lib/pikaday.css" media="all">
+<link rel="stylesheet" href="/static/css/lib/selectize.css">
+<link rel="stylesheet" href="/static/css/lib/jquery.dataTables.css" media="all">
+<link rel="stylesheet" href="/static/css/draw.css" media="all">
+<!-- endbuild -->
+{% endblock %}
+
+{% block main %}
+
+{% include 'includes/timepicker-widget.html' %}
+
+<div class="container">
+
+    <div class="tabs">
+
+        <ul class="tabs-nav clearfix">
+            <li><a alt="#tab-1" href="?tab=1">监控绘图</a></li>
+            <li><a alt="#tab-2" href="?tab=2">HTTP 绘图</a></li>
+            <li><a alt="#tab-3" href="?tab=3">资源使用率</a></li>
+            <li><a alt="#tab-4" href="?tab=4">服务可用率</a></li>
+        </ul>
+
+        <div id="tab-1">
+            <div class="pure-g">
+                <div class="pure-u-1-12 input-label">
+                    绘图指标:
+                </div>
+                <div class="pure-u-1-6">
+                    <select id="input-datatype" name="datatype" class="demo-default" placeholder="select monitor type...">
+                    </select>
+                </div>
+
+                <div class="pure-u-1 servers" style="margin-top: 5px;">
+
+                        <table class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <label for="input-selectall" class="pure-checkbox">
+                                            <input id="input-selectall" class="select-all" type="checkbox">
+                                        </label>
+                                    </th>
+                                    <th>host</th>
+                                    <th data-metric="cpu.user">cpu.user (30 min)</th>
+                                    <th data-metric="cpu.iowait">cpu.iowait (30 min)</th>
+                                    <th data-metric="net.if.in.bytes">net.if.in.bytes (30 min)</th>
+                                </tr>
+                            </thead>
+                        </table>
+                </div>
+
+                <div class="pure-u-1-8">
+                    <button class="pure-button button-orange fn-peity" disabled>画小图</button>
+                </div>
+                <div class="pure-u-1-8">
+                    <button class="pure-button pure-button-primary fn-draw" disabled>画大图</button>
+                </div>
+
+                <div id="panel-system-container" class="pure-u-1"></div>
+            </div>
+        </div>
+
+        <div id="tab-2">
+            <div id="panel-http-container" class="pure-g">
+            </div>
+        </div>
+
+        <div id="tab-3">
+            <div id="panel-usage-container" class="pure-g">
+            </div>
+        </div>
+
+        <div id="tab-4">
+            <div id="panel-availability-container" class="pure-g">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<!-- build:js /static/js/draw.js -->
+<script src="/static/js/draw.js"></script>
+<!-- endbuild -->
+{% endblock %}

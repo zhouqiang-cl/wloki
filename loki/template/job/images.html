@@ -1,0 +1,75 @@
+{% extends 'base/default.html' %}
+
+{% block css %}
+<!--build:css /static/css/job-images.css-->
+<link rel="stylesheet" href="/static/css/lib/jquery.dataTables.css" media="all">
+<link rel="stylesheet" href="/static/css/job-images.css" media="all">
+<!--endbuild-->
+{% endblock %}
+
+{% block sidebar %}
+<div class="title">Image Names</div>
+<ul class="items ui-itemlist">
+    {% for image in images %}
+        <li class="{% if service == image.service %}selected{% endif %}">
+            <i class="fa fa-angle-right"></i>
+            <a href="/job/images/{{ image }}">{{ image }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+{% block main %}
+<div class="container">
+    <div class="panel">
+        {% if image_items %}
+            <div class="image-name">{{ name }}</div>
+
+            <table class="pure-table pure-table-horizontal" style="opacity: 0;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>project</th>
+                        <th>branch</th>
+                        <th>service</th>
+                        <th>timeout</th>
+                        <th>ctime</th>
+                        <th>state</th>
+                        <th>runImage</th>
+                        <th>logUrl</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% set count = 0%}
+                    {% for item in image_items %}
+                        {% set count = count + 1 %}
+                        <tr class="{% if count % 2 == 0 %}pure-table-odd{% endif %}">
+                            <td style="width: 1.5em">{{ count }}</td>
+                            <td>{{ item.project }}</td>
+                            <td>{{ item.branch }}</td>
+                            <td>{{ item.service }}</td>
+                            <td>{{ item.timeout }}</td>
+                            <td>{{ item.ctime }}</td>
+                            <td>{{ item.state }}</td>
+                            <td>{{ item.runImage }}</td>
+                            <td>
+                                <a target="_blank" href="{{ item.logUrl }}">{{ item.logUrl }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="hint">← 点击左侧包名浏览</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/job-images.js -->
+<script src="/static/js/job-images.js"></script>
+<!-- endbuild -->
+{% endblock %}

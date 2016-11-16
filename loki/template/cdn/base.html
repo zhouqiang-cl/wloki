@@ -1,0 +1,40 @@
+{% extends 'base/plain.html' %}
+
+
+{% block main %}
+
+
+<hr />
+<nav>
+<style scoped>
+nav ul li {
+  display: inline-block;
+}
+
+nav > ul > li > a {
+  display: block;
+}
+
+div.content {
+  margin: 20px;
+}
+</style>
+  <ul>
+    <li><a href="/cdn">Poseidon</a></li>
+    <li><a href="/cdn/bandwidth">带宽展示</a></li>
+    <li><a href="/cdn/purger">缓存管理</a></li>
+    <li><a href="/cdn/acl">用户管理</a></li>
+    <li><a href="/cdn/watchdog">质量监控</a></li>
+  </ul>
+</nav>
+<hr />
+
+<div class="content">
+{% block content %}
+{% endblock %}
+</div>
+
+<hr />
+<footer><small>© SRE Team</small></footer>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+__author__ = "qinguoan@nosa.me"
+
+import os
+import sys
+from loki.vali.console import ConsoleCommand
+
+"""
+a bash console command of operation zookeeper and loki.
+
+usage:
+
+node
+    get-node  --node-path
+    del-node  --node-path
+    add-node  --node-id --node-pid --node-name
+    move-node --node-id --dst-pid
+
+server
+    get-server --node-id
+    del-server --node-id
+    add-server --node-id (--server-list-file | --server-name)
+
+service
+    get-service-desc ( --service-name | --tree-id )
+    set-service-desc ( --servuce-name | --tree-id )
+    set-service-type --type
+    get-service-type --type
+    set-service-above --dep-node
+    set-service-below --dep-node
+    delete-service-attr --attr-name
+    set-service-attr --attr-name --attr-value
+    delete-service-env --env-name
+    set-service-env --env-name  --env-setup --env-test
+    set-env-name --old-name --new-name
+
+job
+    set-job --node --procdure
+    pause-job --node --job-id
+    delete-job --node --job-id
+    get-job-detail --node --job-id
+    get-job-status --node --job-id
+    get-job-log --node --job-id --server
+
+procedure
+    set-procedure --procedure-id --begin-command --end-command --nodes-internal --nodes-external
+        --concurrency --template --timeout
+    list-procedure
+    del-procedure --procedure-id
+    get-procedure-meta --procedure-id
+    set-procdure-type
+    set-begin-command
+    set-end-command
+    set-nodes-interval
+    set-nodes-external
+    set-concurrency
+    set-template
+    set-timeout
+
+template
+    set-template
+    list-template
+    meta --template-id
+    set-name
+    set-execute-path
+    set-run-timeout
+    set-get-method
+    set-source
+    set-user
+    set-md5
+
+command
+    list
+    set
+    get
+    add --makepath
+    del --recursive
+"""
+
+cc = ConsoleCommand(sys.argv[1:])
+print cc.run()

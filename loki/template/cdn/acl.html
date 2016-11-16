@@ -1,0 +1,45 @@
+{% extends 'cdn/base.html' %}
+
+{% block content %}
+
+<style>
+  .button-add {
+    background: rgb(28, 184, 65); /* this is a green */
+  }
+
+  .button-del {
+    background: rgb(202, 60, 60); /* this is a maroon */
+  }
+</style>
+
+<table class="pure-table pure-table-bordered">
+  <thead>
+    <tr>
+      <td>域名</td>
+      <td>用户列表</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in acl_table %}
+    <tr>
+      <td>{{ row.domain }}</td>
+      <td>{{ row.user_list|join(' ') }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<form action="/cdn/acl" method="post" class="pure-form">
+  <p>添加或删除用户 [ADMIN ONLY]</p>
+  <select name="domain" required>
+    {% for row in acl_table %}
+      <option value="{{ row.domain }}">{{ row.domain }}</option>
+    {% endfor %}
+  </select>
+  <input type="text" name="user" placeholder="用户名">
+  <button type="submit" name="action" value="add" class="pure-button button-add">添加</button>
+  <button type="submit" name="action" value="del" class="pure-button button-del">删除</button>
+</form>
+
+
+{% endblock %}

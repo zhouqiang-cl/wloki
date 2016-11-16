@@ -1,0 +1,14 @@
+{% extends 'cdn/base.html' %}
+
+{% block content %}
+
+<form action="/cdn/purger/submit" method="post" class="pure-form">
+  <p>URL list:</p>
+  <textarea name="urls" cols="78" rows="30"></textarea>
+  <input type="radio" name="provider" value="uc">UC
+  <input type="radio" name="provider" value="nc">NC
+  <input type="radio" name="provider" value="fw">FW
+  <button type="submit" class="pure-button pure-button-primary">提交</button>
+</form>
+
+{% endblock %}

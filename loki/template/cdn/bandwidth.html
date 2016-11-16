@@ -1,0 +1,25 @@
+{% extends 'cdn/base.html' %}
+
+{% block css %}
+<!-- build:css /static/css/cdn-bandwidth.css -->
+<link rel="stylesheet" href="/static/css/lib/pikaday.css" media="all">
+<!-- endbuild -->
+{% endblock %}
+
+{% block content %}
+
+  {% include 'includes/timepicker-widget.html' %}
+
+  <iframe src="http://loki.nosa.me/customv2/dashboard-solo/db/cdn-bandwidth?panelId=1&fullscreen&from={{ start_ts }}&to={{ end_ts }}&theme=light" width="100%" height="300" frameborder="0"></iframe>
+  <iframe src="http://loki.nosa.me/customv2/dashboard-solo/db/cdn-bandwidth?panelId=5&fullscreen&from={{ start_ts }}&to={{ end_ts }}&theme=light" width="100%" height="300" frameborder="0"></iframe>
+  <iframe src="http://loki.nosa.me/customv2/dashboard-solo/db/cdn-bandwidth?panelId=2&fullscreen&from={{ start_ts }}&to={{ end_ts }}&theme=light" width="100%" height="300" frameborder="0"></iframe>
+  <iframe src="http://loki.nosa.me/customv2/dashboard-solo/db/cdn-bandwidth?panelId=3&fullscreen&from={{ start_ts }}&to={{ end_ts }}&theme=light" width="100%" height="300" frameborder="0"></iframe>
+  <iframe src="http://loki.nosa.me/customv2/dashboard-solo/db/cdn-bandwidth?panelId=4&fullscreen&from={{ start_ts }}&to={{ end_ts }}&theme=light" width="100%" height="300" frameborder="0"></iframe>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/cdn-bandwidth.js -->
+<script src="/static/js/cdn-bandwidth.js"></script>
+<!-- endbuild -->
+{% endblock %}

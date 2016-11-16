@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<!-- build:js /static/js/cdn-watchdog-chart.js -->
+<script src="/static/js/lib/jquery-2.1.1.js"></script>
+<script src="/static/js/lib/highstock.js"></script>
+<!-- endbuild -->
+<script>
+$(function () {
+    $('#container').highcharts({
+        title: {
+            text: '{{ chart.title }}',
+            x: -20 //center
+        },
+        subtitle: {
+            text: '{{ chart.subtitle }}',
+            x: -20
+        },
+        xAxis: {
+            categories: {{ chart.timestamp }}
+        },
+        yAxis: {
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '%'
+        },
+        series: [{
+            name: 'Availability',
+            data: {{ chart.dump_col_by_header('可用性(%)') }}
+        }]
+    });
+});
+</script>
+
+</body>
+</html>

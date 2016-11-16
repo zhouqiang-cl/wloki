@@ -1,0 +1,80 @@
+Frequently called:
+
+7037516 GET /server/api/servers
+ 182686 POST /tsdbproxy/api/query
+ 151138 GET /ptree/api/nodes/domains
+  64551 GET /tsdb/api/query
+    247 GET /tsdbproxy/api/suggest
+
+
+Others:
+
+(-> dashboard)
+/home/resource_usage_percentage_summary$
+-> /dashboard/api/resource_usage_percentage_summary
+/home/product_summary$
+-> /dashboard/api/product_summary
+/home/product_ids$
+-> /dashboard/api/product_ids
+
+/draw/api/configs$
+-> /api/draw/configs
+/draw/api/http_configs$
+-> /api/draw/http_configs
+/draw/api/domain_configs$
+-> /api/draw/domain_configs
+/draw/api/usage_configs$
+-> /api/draw/usage_configs
+/draw/api/availability_configs$
+-> /api/draw/availability_configs
+
+/ptree/api/nodes$
+-> /api/nodes
+/ptree/api/nodes/query$
+-> /api/nodes/query
+/ptree/api/nodes/(\d+)$
+-> /api/nodes/(\d+)
+/ptree/api/user_nodes$
+-> /api/nodes/user_nodes
+# 151138 GET /ptree/api/nodes/domains
+/ptree/api/nodes/domains$
+-> /api/nodes/domains
+/ptree/api/nodes/(\d+)/domains$
+-> /api/nodes/(\d+)/domains
+/ptree/api/nodes/(\d+)/domains/(\d+)$
+-> /api/nodes/(\d+)/domains/(\d+)
+/ptree/api/nodes/(\d+)/servers$
+-> /api/nodes/(\d+)/servers
+/ptree/api/server_search$
+-> /api/nodes/server_search
+/ptree/api/contacter$
+-> /api/nodes/contacter
+
+/domain/api/domains$
+-> /api/domains
+
+# 7037516 GET /server/api/servers
+/server/api/servers$
+-> /api/servers
+
+/api/collectors$
+/api/collectors/(\d+)$
+
+/api/policies$
+/api/policies/(\d+)$
+
+/api/groups$
+/api/groups/(\d+)$
+
+/api/contacter_sync$
+/api/contacter_ids$
+
+/api/job/template$
+/api/job/template/(\d+)$
+/api/job/template_type$
+/api/job/get_log$
+/api/job/get_status$
+/api/job/deploy$
+/api/job/deploy/(\d+)$
+/api/job/deploy/(pause|play|stop)/(\d+)$
+/api/job/deploy_type$

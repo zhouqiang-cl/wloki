@@ -1,0 +1,15 @@
+{% extends 'cdn/base.html' %}
+
+{% block content %}
+<style>
+  pre {
+    background: #c4c4c4; /* same color as selected state on site menu */
+    padding: 10px 10px;
+  }
+</style>
+
+<pre>{{ result_msg }}</pre>
+
+<a href="/cdn/purger">Back</a>
+
+{% endblock %}

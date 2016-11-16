@@ -1,0 +1,77 @@
+{% extends 'base/default.html' %}
+
+
+{% block css %}
+<!-- build:css /static/css/ocean.css -->
+<link rel="stylesheet" href="/static/css/lib/jquery.dataTables.css" media="all">
+<link rel="stylesheet" href="/static/css/lib/selectize.css">
+<link rel="stylesheet" href="/static/css/ocean.css" media="all">
+<!-- endbuild -->
+{% endblock %}
+
+
+{% block main %}
+
+<div class="container">
+
+    <div class="tabs">
+        <ul class="tabs-nav clearfix">
+            <li><a alt="#tab-1" href="?tab=1">Repl Spider</a></li>
+            <li><a alt="#tab-2" href="?tab=2">Custom Draw</a></li>
+        </ul>
+
+        <div id="tab-1" class="pure-g tab-content">
+            <div class="pure-u-1-1">
+                <div class="panel repl-spider">
+                    <input type="text" class="pure-input fn-search" placeholder="Database">
+
+                    <div class="content">
+                    </div>
+
+                    <div class="alert alert-warning" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-2" class="pure-g tab-content">
+            <div class="pure-u-1-4">
+                <div class="servers panel">
+
+                    <input class="fn-search pure-input" type="text" placeholder="Search host">
+
+                    <table id="server-table" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label for="input-selectall" class="pure-checkbox">
+                                        <input id="input-selectall" class="select-all" type="checkbox">
+                                    </label>
+                                </th>
+                                <th>host</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+
+            <div class="pure-u-3-4">
+                <div class="actions panel">
+                    <input type="text" class="input-metrics" placeholder="Type a metric">
+                    <button class="pure-button">画图</button>
+                </div>
+                <div class="charts panel">
+                    hello
+                </div>
+            </div>
+
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<!-- build:js /static/js/ocean.js -->
+<script src="/static/js/ocean.js"></script>
+<!-- endbuild -->
+{% endblock %}

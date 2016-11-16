@@ -1,0 +1,238 @@
+{% extends 'base/default.html' %}
+
+
+{% block css %}
+<!-- build:css /static/css/privilege.css -->
+<link rel="stylesheet" href="/static/css/lib/jquery.dataTables.css" media="all">
+<link rel="stylesheet" href="/static/css/lib/hint.min.css" media="all">
+<link rel="stylesheet" href="/static/css/privilege.css" media="all">
+<!-- endbuild -->
+{% endblock %}
+
+
+{% block main %}
+
+<div class="container">
+
+    <div class="filter panel">
+        <!-- Modals -->
+        <div class="modal fade apply-modal" style="display: none;">
+            <form class="apply-modal-form">
+                <div class="header">申请权限</div>
+                <div class="body">
+                    是否确认申请？: <span class="value"></span>
+                </div>
+                <div class="footer">
+                    <button type="submit" class="pure-button pure-button-primary fn-add-node">提交</button>
+                    <a class="pure-button fn-close-modal">取消</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal fade token-modal" style="display: none;">
+            <form class="token-modal-form">
+                <div class="header">增加 Token 权限</div>
+                <div class="body">
+                    <div>
+                        <span class="prefix">为 token</span>
+                        <input type="text" name="token">
+                    </div>
+                    <div>
+                        <span class="prefix">在节点</span>
+                        <input type="text" name="node_id" class="readonly" required>
+                        <span class="v-node_path"></span>
+                    </div>
+                    <div>
+                        <span class="prefix">增加</span>
+                        <input type="text" name="privilege_type" class="readonly" required> 类型的权限？
+                    </div>
+                </div>
+                <div class="footer">
+                    <button type="submit" class="pure-button pure-button-primary">提交</button>
+                    <a class="pure-button fn-close-modal">取消</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="node-info">
+            <div class="label">当前节点:</div>
+            <div class="content">
+                <span class="path">&nbsp;</span>
+            </div>
+        </div>
+
+        <div class="privilege-type">
+            <div class="label">权限类别:</div>
+            <select name="" id="">
+                <option value="">--</option>
+            </select>
+            <span class="arrow-down">▾</span>
+        </div>
+
+        <div class="privilege-items">
+            <div class="label">权限矩阵:</div>
+            <div class="content">
+                <div class="items">
+
+                </div>
+                <button class="pure-button pure-button-primary fn-apply-modal" style="display: none;">申请权限</button>
+            </div>
+        </div>
+
+<!--         <div>
+            <div class="label"></div>
+            <button class="pure-button pure-button-primary fn-apply-modal" disabled>申请权限</button>
+        </div>
+ -->    </div>
+
+    <div class="tabs">
+        <ul class="tabs-nav clearfix">
+            <li><a alt="#tab-1" href="?tab=1">我的权限</a></li>
+            <li><a alt="#tab-2" href="?tab=2">用户权限管理</a></li>
+            <li><a alt="#tab-3" href="?tab=3">Token 权限管理</a></li>
+        </ul>
+
+        <div id="tab-1" class="pure-g tab-content">
+            <div class="pure-u-1 panel">
+                <div class="title">显示<b>我</b>在<b>所有节点</b><b>所有类型</b>上申请和拥有的权限</div>
+                <div class="content">
+                    <div class="privileges-table cozy-row">
+                        <table class="stripe user-privileges">
+                            <thead>
+                                <tr>
+                                    <th>节点路径</th>
+                                    <th>类别</th>
+                                    <th>权限</th>
+                                    <th>ctime</th>
+                                    <th>mtime</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-2" class="pure-g tab-content">
+            <div class="cover"></div>
+            <div class="pure-u-1 panel">
+                <div class="title applying-title">待批准</div>
+                <div class="content">
+                    <div class="privileges-table cozy-row">
+                        <table class="stripe applying-privileges">
+                            <thead>
+                                <tr>
+                                    <th>节点路径</th>
+                                    <th>类别</th>
+                                    <th>用户</th>
+                                    <th>权限</th>
+                                    <th>ctime</th>
+                                    <th>mtime</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="pure-u-1 panel">
+                <div class="title all-title">所有权限</div>
+                <div class="search-box">
+                    <input class="pure-input" type="text" name="" id="" placeholder="搜索用户名">
+                </div>
+                <div class="content">
+                    <div class="privileges-table cozy-row">
+                        <table class="stripe all-privileges">
+                            <thead>
+                                <tr>
+                                    <th>节点路径</th>
+                                    <th>类别</th>
+                                    <th>用户</th>
+                                    <th>权限</th>
+                                    <th>ctime</th>
+                                    <th>mtime</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div class="all-privileges-paginator"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-3" class="pure-g tab-content">
+            <div class="cover"></div>
+            <div class="pure-u-1 panel">
+                <div class="title token-title">显示<b>所有节点</b>下<b>token</b>的<b>所有类别</b>的权限条目</div>
+                <div class="token-action">
+                    <button class="pure-button pure-button-primary fn-show-token-modal">Add Privilege for Token</button>
+                </div>
+                <div class="content">
+                    <div class="privileges-table cozy-row">
+                        <table class="stripe token-privileges">
+                            <thead>
+                                <tr>
+                                    <th>节点路径</th>
+                                    <th>类别</th>
+                                    <th>token</th>
+                                    <th>权限</th>
+                                    <th>ctime</th>
+                                    <th>mtime</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% raw %}
+<script type="text/template" id="privilege-item-template">
+    <div class="item hint--bottom{{#if status}}{{else}} no-status{{/if}}" data-hint="{{description}}">
+        {{#if status}}
+        <input type="checkbox" id="checkbox-{{name}}" name="privilege-items" value="{{name}}" {{#if disabled}}disabled{{/if}}>
+        {{/if}}
+        <label for="checkbox-{{name}}">
+            <div class="cover"></div>
+            <div class="name">{{name}}</div>
+            <div class="status status-{{status}}">{{{status_alias status}}}</div>
+        </label>
+    </div>
+</script>
+
+<script type="text/template" id="privilege-placeholder-template">
+    <div class="placeholder">请选择权限类型和节点</div>
+</script>
+
+<script type="text/template" id="privilege-row-template">
+    <div class="privilege-row">
+        {{#this}}<!--
+        --><div class="item privilege-operation-item">
+            <div class="name">{{name}}</div>
+            <div class="status status-{{status}}">{{{status_alias status}}}</div>
+        </div><!--
+        -->{{/this}}
+    </div>
+</script>
+
+<script type="text/template" id="privilege-menu-template">
+    <div class="menu">
+        <div class="subtitle">操作</div>
+        <a href="#" class="action" data-action="approve">approve (通过)</a>
+        <a href="#" class="action" data-action="reject">reject (拒绝)</a>
+        <a href="#" class="action" data-action="revoke">revoke (吊销)</a>
+    </div>
+</script>
+{% endraw %}
+
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/privilege.js -->
+<script src="/static/js/privilege.js"></script>
+<!-- endbuild -->
+{% endblock %}

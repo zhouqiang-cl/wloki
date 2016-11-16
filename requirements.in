@@ -1,0 +1,26 @@
+sqlalchemy==1.0.9
+sqlalchemy_utils
+msgpack-python
+ipaddress
+tornado>=4.0.1
+jinja2
+ujson
+simplejson
+pynginxconfig
+gevent==1.1b2
+raven==5.5.0
+redis
+pycrypto
+enum34
+ez_setup
+google-apputils
+protobuf
+PyYAML
+mistune
+blinker
+werkzeug
+m3-cdecimal
+uwsgi>=2.0.11.2
+supervisor
+-e git+http://gitlab.hy01.internal.nosa.me/sre-team/kazoo.git#egg=kazoo
+-e git+http://gitlab.hy01.internal.nosa.me/sre-team/python-lazy-object-proxy.git#egg=lazy-object-proxy

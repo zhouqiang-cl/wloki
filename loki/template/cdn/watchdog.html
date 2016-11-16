@@ -1,0 +1,24 @@
+{% extends 'cdn/base.html' %}
+
+{% block css %}
+<!-- build:css /static/css/cdn-watchdog.css -->
+<link rel="stylesheet" href="/static/css/lib/pikaday.css" media="all">
+<!-- endbuild -->
+{% endblock %}
+
+{% block content %}
+
+  {% include 'includes/timepicker-widget.html' %}
+
+  <!-- iframe src="/cdn/watchdog/chart?chart_id=compPerfByTime&task_id=2048814&fd={{ fd }}&td={{ td }}" width=100% height=450 frameborder="0">豌豆荚</iframe -->
+  <iframe src="/cdn/watchdog/chart?chart_id=compPerfByTime&task_id=2052342&fd={{ fd }}&td={{ td }}" width=100% height=450 frameborder="0">网宿</iframe>
+  <iframe src="/cdn/watchdog/chart?chart_id=compPerfByTime&task_id=2052341&fd={{ fd }}&td={{ td }}" width=100% height=450 frameborder="0">快网</iframe>
+  <iframe src="/cdn/watchdog/chart?chart_id=compPerfByTime&task_id=2049158&fd={{ fd }}&td={{ td }}" width=100% height=450 frameborder="0">UCloud</iframe>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/cdn-watchdog.js -->
+<script src="/static/js/cdn-watchdog.js"></script>
+<!-- endbuild -->
+{% endblock %}

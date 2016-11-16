@@ -1,0 +1,254 @@
+.template-type-div {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.template-type-div > label {
+    margin: 0 15px 0 0 !important;
+    width: 140px !important;
+    height: 32px !important;
+    text-align:right !important;
+    display: inline-block !important;
+    position: relative !important;
+    top: 7px !important;
+    vertical-align: top !important;
+}
+
+.template-type-div > select {
+    height: 32px;
+    display: inline-block;
+}
+
+.template-deployment > .actions > .fn-search {
+    margin-bottom: 8px;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.actions {
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.actions > .fn-search {
+    margin-bottom: 8px;
+    width: calc(100% - 75px);
+    margin-right: 10px;
+}
+
+#copy-b {
+    float: right;
+}
+
+.form-row .input-group {
+    width: calc(100% - 200px) !important;
+}
+
+.form-row[data-key="servers"] .input-group label{
+    width: calc(50% - 30px) !important;
+}
+
+
+.form-row[data-type="servers_checkbox"] .head {
+    padding: 5px 0;
+}
+.form-row[data-type="servers_checkbox"] .head .name {
+    margin-right: 1em;
+    font-weight: bold;
+}
+.form-row[data-type="servers_checkbox"] .head .btn {
+    font-size: 0.8em;
+    color: #888;
+    cursor: pointer;
+}
+.form-row[data-type="servers_checkbox"] .head .btn:hover {
+    font-size: #333;
+    text-decoration: underline;
+}
+.form-row[data-type="servers_checkbox"] .head {
+}
+.form-row[data-type="servers_checkbox"] .servers span {
+    display: inline-block;
+    width: 50%;
+    padding-right: 50px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+.form-row[data-type="servers_checkbox"] .servers label {
+    display: block;
+    overflow: hidden;
+    word-break: break-all;
+    padding: 5px 5px 5px 17px;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+}
+.form-row[data-type="servers_checkbox"] .servers input[type="checkbox"] {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 7px;
+    height: auto;
+}
+
+.form-row .stat {
+    margin-top: 5px;
+    padding: 5px;
+    background: #f3f3f3;
+    font-size: .9em;
+    color: #888;
+}
+.form-row .stat .number {
+    color: #333;
+    font-weight: bold;
+}
+
+.console-host {
+    margin-top: 10px;
+}
+
+.console-host .title {
+    background-color: #eee;
+    padding: 10px;
+}
+
+.console-host .content {
+    background-color: rgb(240, 240, 240);
+    color: rgb(18, 18, 18);
+    padding: 10px;
+}
+
+.float-right {
+    float: right;
+}
+
+
+.button-pressed {
+    background-color: #789;
+    color: white;
+    box-shadow: 2px 2px 2px #888888;
+}
+
+.server-checkbox-icon {
+    color: #666;
+}
+.fa-server.server-checkbox-icon {
+    color: #2494F2;
+}
+
+
+div[data-type=servers_checkbox] .tree {
+    padding: 8px;
+    border: 1px dashed #555;
+    min-height: 100px;
+}
+
+.template-detail div[data-type=servers_checkbox] .tree {
+    display: inline-block;
+    width: calc(100% - 200px);
+}
+
+div[data-type=servers_checkbox] .jstree-default .jstree-clicked {
+    background: #FFF9DB;
+}
+
+div[data-type=servers_checkbox] .selected-servers {
+    display: flex;
+    border: 1px dashed #aaa;
+    border-top-width: 0px;
+}
+div[data-type=servers_checkbox] .selected-servers .idc {
+    width: 100%;
+}
+div[data-type=servers_checkbox] .selected-servers ul {
+    display: flex;
+    flex-wrap: wrap;
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #aaa;
+}
+div[data-type=servers_checkbox] .selected-servers ul li {
+    display: block;
+    width: 160px;
+    padding: 5px;
+}
+
+
+form .errors {
+    padding: 8px 0 8px 25px;
+}
+
+
+/* status- */
+[data-status=succ] .title {
+    background: #B8E5A5;
+    color: #215622;
+}
+[data-status=succ] .server-status:after {
+    content: "success";
+}
+
+[data-status=fail] .title {
+    background: #FFC6BC;
+    color: #982F2C;
+}
+[data-status=fail] .server-status:after {
+    content: "failed";
+}
+
+[data-status=error] .title {
+    background: rgb(59, 64, 81);
+    color: rgb(239, 239, 239);
+    font-weight: 200;
+}
+[data-status=error] .server-status:after {
+    content: "error";
+}
+
+[data-status=paused] .title {
+    background: #F7EAA5;
+    color: #7C550E;
+}
+[data-status=paused] .server-status:after {
+    content: "paused";
+}
+
+[data-status=doing] .title {
+    background: #BBE3F7;
+    color: #045279;
+}
+[data-status=doing] .server-status:after {
+    content: "doing";
+}
+
+/*[data-status=undo] .title {*/
+/*/!* Actually pending *!/*/
+/*background: ;*/
+/*color: ;*/
+/*}*/
+
+[data-status=undo] .server-status:after {
+    /* Actually pending */
+    content: "pending";
+}
+
+.console-host .content pre {
+    font-family: consolas, monospace;
+    font-size: 13px;
+}
+
+
+.job-status-count {
+    padding: 10px;
+    margin: 10px 0;
+    box-shadow: inset 0 0 10px  #aaa;
+}
+
+.job-status-count > span {
+    margin-right: 2em;
+    display: inline-block;
+    font-size: 1.1em;
+}

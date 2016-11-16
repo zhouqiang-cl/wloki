@@ -1,0 +1,27 @@
+#sidebar {
+    /*overflow-y: auto;*/
+}
+
+#main {
+}
+#main .panel {
+    padding-bottom: 20px;
+}
+#main .package-name {
+    font-size: 1.8em;
+    border-bottom: 1px solid #aaa;
+    padding: 10px 0;
+    margin-bottom: 15px;
+}
+#main .pure-table {
+    font-size: 13px;
+    border: 0;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+#main .hint {
+    padding: 1.5em;
+    font-size: 1.2em;
+}
+

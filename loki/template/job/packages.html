@@ -1,0 +1,71 @@
+{% extends 'base/default.html' %}
+
+{% block css %}
+<!--build:css /static/css/job-packages.css-->
+<link rel="stylesheet" href="/static/css/lib/jquery.dataTables.css" media="all">
+<link rel="stylesheet" href="/static/css/job-packages.css" media="all">
+<!--endbuild-->
+{% endblock %}
+
+{% block sidebar %}
+<div class="title">Package Names</div>
+<ul class="items ui-itemlist">
+    {% for package in packages %}
+        <li class="{% if name == package.name %}selected{% endif %}">
+            <i class="fa fa-angle-right"></i>
+            <a href="/job/packages/{{ package.name }}">{{ package.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+{% block main %}
+<div class="container">
+    <div class="panel">
+        {% if package_items %}
+            <div class="package-name">{{ name }}</div>
+
+            <table class="pure-table pure-table-horizontal" style="opacity: 0;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>target_filename</th>
+                        <th>url</th>
+                        <th>branch</th>
+                        <th>idc</th>
+                        <th>ctime</th>
+                        <th>md5</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% set count = 0%}
+                    {% for item in package_items %}
+                        {% set count = count + 1 %}
+                        <tr class="{% if count % 2 == 0 %}pure-table-odd{% endif %}">
+                            <td style="width: 1.5em">{{ count }}</td>
+                            <td>{{ item.target_filename }}</td>
+                            <td>
+                                <a href="http://download.hy01.nosa.me/download/{{ item.url }}" download>{{ item.url }}</a>
+                            </td>
+                            <td>{{ item.branch }}</td>
+                            <td>{{ item.idc }}</td>
+                            <td>{{ item.ctime }}</td>
+                            <td>{{ item.md5 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="hint">← 点击左侧包名浏览</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- build:js /static/js/job-packages.js -->
+<script src="/static/js/job-packages.js"></script>
+<!-- endbuild -->
+{% endblock %}
