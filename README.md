@@ -49,7 +49,7 @@ Loki 的主要用途:
 
 ### 部署
 
-请参考[文档](https://docs.google.com/a/nosa.me/document/d/1Rz5oBQjWa5FeLiErzaBGGbWtiBQiJ8c1Uj5jc4Wl8b4)
+请参考[文档](https://docs.nosa.me/a/nosa.me/document/d/1Rz5oBQjWa5FeLiErzaBGGbWtiBQiJ8c1Uj5jc4Wl8b4)
 
 
 ## 开发
@@ -404,7 +404,7 @@ Loki 的主要用途:
 
 ### Poseidon
 
-> by wzyboy
+> by wateer 
 
 #### Etymology
 
